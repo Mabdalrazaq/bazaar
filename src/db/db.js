@@ -70,33 +70,6 @@ export const usersDB=[
     }
 ]
 
-export const soldItems=[
-    {
-        tableId: 1,
-        itemId: 3,
-        buyerId: 12345    
-    },
-    {
-        tableId: 2,
-        itemId: 3,
-        buyerId: 12345    
-    },
-    {
-        tableId: 3,
-        itemId: 3,
-        buyerId: 12345    
-    },
-    {
-        tableId: 5,
-        itemId: 3,
-        buyerId: 12345    
-    },
-    {
-        tableId: 11,
-        itemId: 3,
-        buyerId: 12345    
-    }
-]
 
 export const itemsDB=[
     {

@@ -57,13 +57,32 @@ export const removeItem=id=>({
     payload:id
 })
 
-export const editItem=(id,values)=>({
-    type: actionTypes.EDIT_ITEM,
-    payload: {
-        id,
-        values
+// export const editItem=(id,values)=>({
+//     type: actionTypes.EDIT_ITEM,
+//     payload: {
+//         id,
+//         values
+//     }
+// })
+
+export const editItem=(id,values)=>async dispatch=>{
+    const data={
+        name:values.name,
+        price:values.price
     }
-})
+    console.log(data);
+    console.log(JSON.stringify(data));
+    const response = await fetch('http://localhost:4001/api/items/'+id,{
+        headers: {
+            'Content-Type': 'application/json'
+        },      
+        method: 'PUT',
+        body: JSON.stringify(data)
+    })
+    const jsonResponse= await response.json();
+    console.log(jsonResponse);
+}
+
 
 export const toggleEditingModal=()=>({
     type: actionTypes.TOGGLE_EDITING_MODAL
@@ -76,3 +95,19 @@ export const addItem=(tableId,values)=>({
         values
     }
 })
+
+// export const addItem=(tableId,values)=>async dispatch=>{
+//     const data={
+//         item:values
+//     }
+//     const response = await fetch('http://localhost:4001/api/items',{
+    // \        headers: {
+        // 'Content-Type': 'application/json'
+
+//         method: 'POST',
+//         body: JSON.stringify(data)
+//     })
+
+//     const jsonResponse= await response.json();
+//     console.log(jsonResponse);
+// }

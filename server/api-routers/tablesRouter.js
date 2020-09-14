@@ -27,34 +27,5 @@ tablesRouter.get('/',async(req,res)=>{
     }
 })
 
-tablesRouter.get('/:tableId',async(req,res)=>{
-    params={
-        TableName: 'Tables',
-        KeyConditionExpression: 'id=:id',
-        ExpressionAttributeValues:{
-            ':id': Number(req.params.tableId)
-        }
-    }
-    try{
-        const table=await docClient.query(params).promise();
-        if(table.Count===0)
-            throw(new Error('Not Found'))
-        console.log(table.Items);
-        res.json(table.Items);
-    }catch(err){
-        console.log(err);
-        res.sendStatus(404);
-    }
-})
-
-tablesRouter.post('/:tableId/',async(req,res)=>{
-    params={
-        TableName='Tables',
-        Item:{
-            
-        }
-    }
-})
-
 
 module.exports = tablesRouter;

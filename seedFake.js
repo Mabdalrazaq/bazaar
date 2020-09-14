@@ -32,7 +32,7 @@ const seedData=async()=>{
     }
 
     params={
-        TableName: 'SoldItems'
+        TableName: 'Items'
     }
 
     try{
@@ -84,14 +84,12 @@ const seedData=async()=>{
     }
 
     params = {
-        TableName : "SoldItems",
+        TableName : "Items",
         KeySchema: [       
-            { AttributeName: "itemId", KeyType: "HASH"},
-            { AttributeName: "tableId", KeyType: "RANGE"} 
+            { AttributeName: "id", KeyType: "HASH"},
         ],
         AttributeDefinitions: [       
-            { AttributeName: "itemId", AttributeType: "N" },
-            { AttributeName: "tableId", AttributeType: "N" }
+            { AttributeName: "id", AttributeType: "N" },
         ],
         ProvisionedThroughput: {       
             ReadCapacityUnits: 10, 
@@ -145,9 +143,9 @@ const seedData=async()=>{
     })
 
     await new Promise((resolve,reject)=>{
-        db.soldItems.forEach(async item=>{
+        db.itemsDB.forEach(async item=>{
             params={
-                TableName: 'SoldItems',
+                TableName: 'Items',
                 Item:{
                     ...item
                 }
@@ -155,14 +153,13 @@ const seedData=async()=>{
             try{
                 data=await docClient.put(params).promise()
                 resolve(data)
-                console.log(`item ${item.itemId} added`)
+                console.log(`item ${item.id} added`)
             }catch(err){
                 console.log(err);
                 reject(err);
             }
         });
     })
-
 
 }
 seedData();

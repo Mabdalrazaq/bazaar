@@ -26,6 +26,7 @@ class Sell extends Component{
     constructor(props){
         super(props);
         this.state={
+            editingModalOpen: false,
             item:{},
             editing: false,
             tooltips:{
@@ -38,25 +39,28 @@ class Sell extends Component{
     }
     render(){
 
+        const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
+        const items=this.props.items.filter(item=>item.tableId===this.props.table.id);
+
         const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
 
-        const getItem=(itemId)=>{
-            return this.props.table.items.find(item=>item.id===itemId);
+        const getItem=(id)=>{
+            return items.find(item=>item.id===id);
         }
 
 
-        const handleEdit=(itemId)=>{
+        const handleEdit=(id)=>{
             this.setState({
-                item:getItem(itemId),
+                item:getItem(id),
                 editing: true
             })
-            this.props.toggleEditingModal();
+            toggleEditingModal();
         }
         
         const handleSumbit=values=>{
-            this.props.toggleEditingModal();
+            toggleEditingModal();
             if(this.state.editing)
-                this.props.editItem(this.state.item.id,this.props.table.id,values);
+                this.props.editItem(this.state.item.id,values);
             else
                 this.props.addItem(this.props.table.id,values);
         }
@@ -66,15 +70,14 @@ class Sell extends Component{
                 item:{},
                 editing: false
             });
-            this.props.toggleEditingModal();
+            toggleEditingModal();
         }
     
-        // available: true
         if(this.props.table!==undefined)
             return(
                 <>
-                    <Modal isOpen={this.props.editingModalOpen} toggle={this.props.toggleEditingModal}>
-                        <ModalHeader toggle={this.props.toggleEditingModal}>Edit item</ModalHeader>
+                    <Modal isOpen={this.state.editingModalOpen} toggle={toggleEditingModal}>
+                        <ModalHeader toggle={toggleEditingModal}>Edit item</ModalHeader>
                         <ModalBody>
                             <LocalForm onSubmit={values=>handleSumbit(values)}>
                                 <Row className='form-group'>
@@ -142,7 +145,7 @@ class Sell extends Component{
                     <Container>
                         <h1 className='text-center my-5'>This is your table</h1>
                         <Row>
-                            {this.props.table.items.map(item=>{
+                            {items.map(item=>{
                                 return(
                                     <Col xs='12' sm='12' md='6' lg='4' key={item.id} className='my-3' >
                                         <Card>
@@ -152,7 +155,7 @@ class Sell extends Component{
                                                 <CardSubtitle><Badge pill color='info'>{item.price} JOD</Badge></CardSubtitle>
                                                 <CardText className='cardTextHeight'>{item.description}</CardText>
                                                 <Button className={item.available? 'd-inline ml-auto mr-1': 'd-none'} color='success' size='sm' onClick={()=>handleEdit(item.id)}>Edit</Button>
-                                                <Button className={item.available? 'd-inline': 'd-none'} color='danger' size='sm' onClick={()=>this.props.removeItem(item.id,this.props.table.id)}>Remove</Button>
+                                                <Button className={item.available? 'd-inline': 'd-none'} color='danger' size='sm' onClick={()=>this.props.removeItem(item.id)}>Remove</Button>
                                             </CardBody>
                                                 <Button className={item.available? 'd-none': 'd-block'} color='secondary' disabled block>Sold</Button>
                                         </Card>
