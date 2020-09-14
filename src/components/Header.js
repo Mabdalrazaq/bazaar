@@ -61,12 +61,12 @@ return(
                     </Col>
                     <Col xs='12' sm='4'>
                         <Link to='/bazaar' className='nav-link'>
-                          <Button className='jumbButton' outline color='success' block ><span className='fa fa-shopping-cart fa-lg'></span> Go Buy</Button>
+                          <Button className='jumbButton' outline color='success' block ><span className='fa fa-shopping-cart fa-lg'></span> Enter Bazaar</Button>
                         </Link>
                     </Col>
                     <Col xs='12' sm='4'>
                         <Link to='/sell' className='nav-link'>
-                            <Button className='jumbButton' outline color='info' block ><span className='fa fa-dollar fa-lg'></span> Go Sell</Button>
+                            <Button className='jumbButton' outline color='info' block ><span className='fa fa-dollar fa-lg'></span> Sell In Bazaar</Button>
                         </Link>
                     </Col>
                 </Row>

@@ -29,7 +29,7 @@ class Bazaar extends Component{
                                     </Media>
                                         {table.description}   
                                         <Media bottom>
-                                            <Link className='nav-link' to={'/bazaar/'+table.id}>
+                                            <Link className='nav-link' to={'/bazaar/'+table.id} onClick={()=>{document.documentElement.scrollTop = 0;}}>
                                                 <Button color='warning' outline>Enter table</Button> 
                                             </Link>
                                         </Media>

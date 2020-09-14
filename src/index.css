@@ -60,3 +60,7 @@ code {
   width:100px;
   height:100px;
 }
+
+.cardTextHeight{
+  height: 80px;
+}

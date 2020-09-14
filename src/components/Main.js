@@ -8,41 +8,52 @@ import Profile from './Profile';
 import Bazaar from './Bazaar';
 import Sell from './Sell';
 import Table from './Table';
-import {user, tables} from '../db/db';
+import Buy from './Buy';
+
 import {Switch,
     Redirect,
     Route,
     withRouter} from 'react-router-dom';
 
 import {connect} from 'react-redux';
-import {setAnimating,carouselNext,carouselPrev} from '../redux/actionCreators'
-
-
-const table=tables.find(table=>table.id=user.info.tableInfo.tableId);
+import {setAnimating,
+        carouselNext,
+        carouselPrev,
+        startCarouselAnimating,
+        startCarouselIndex} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
-    activeIndex: state.carouselActiveIndex
+    activeIndex: state.carouselActiveIndex,
+    users: state.users,
+    tables: state.tables
 })
 
 const mapDispatchToProps=dispatch=>({
     setAnimating: (bool,index)=>dispatch(setAnimating(bool,index)),
     carouselNext: (length,index)=>dispatch(carouselNext(length,index)),
-    carouselPrev: (length,index)=>dispatch(carouselPrev(length,index))
+    carouselPrev: (length,index)=>dispatch(carouselPrev(length,index)),
+    startCarouselAnimating: (length)=>dispatch(startCarouselAnimating(length)),
+    startCarouselIndex: (length)=>dispatch(startCarouselIndex(length))
 })
 
 class Main extends Component{
-
+    componentDidMount(){
+        this.props.startCarouselAnimating(this.props.tables.length);
+        this.props.startCarouselIndex(this.props.tables.length);
+    }
     render(){
-
+        const activeUser=this.props.users.find(user=>user.active);
+        const ProfileWithId=({match})=><Profile user={this.props.users.find(user=>user.id===Number(match.params.userId))}/>
+        const TableWithId=({match})=><Table table={this.props.tables.find(table=>table.id===Number(match.params.tableId))} />    
         return(
             <>
-                <Header user={user} />
+                <Header user={activeUser} />
                 <Switch>
                     <Route path='/home'>
                         <Home/>
                     </Route>
-                    <Route path='/profiles/:userId' component={Profile}/>
+                    <Route path='/profiles/:userId' component={ProfileWithId}/>
                     <Route path='/about'>
                         <About/>
                     </Route>
@@ -50,14 +61,15 @@ class Main extends Component{
                         <Contact/>
                     </Route>
                     <Route exact path='/bazaar'>
-                        <Bazaar tables={tables} setAnimating={this.props.setAnimating}
+                        <Bazaar tables={this.props.tables} setAnimating={this.props.setAnimating}
                         carouselNext={this.props.carouselNext} carouselPrev={this.props.carouselPrev}
                         animating={this.props.animating} activeIndex={this.props.activeIndex} />
                     </Route>
                     <Route path='/sell'>
-                        <Sell user={user} table={table}/>
+                        <Sell user={activeUser} table={this.props.tables.find(table=>table.id===activeUser.tableId)}/>
                     </Route>
-                    <Route path='/bazaar/:tableId' component={Table}/>
+                    <Route path='/bazaar/:tableId' component={TableWithId}/>
+                    <Route path='/buy' component={Buy} />
                     <Redirect to='/home/'/>
                 </Switch>
                 <Footer/>
@@ -65,7 +77,6 @@ class Main extends Component{
         );
     }
 }
-
 
 
 

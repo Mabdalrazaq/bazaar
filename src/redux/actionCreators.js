@@ -23,3 +23,13 @@ export const setAnimating=(bool,index)=>({
         bool
     }
 })
+
+export const startCarouselAnimating=length=>({
+    type:actionTypes.START_CAROUSEL_ANIMATING,
+    payload: length
+})
+
+export const startCarouselIndex=length=>({
+    type: actionTypes.START_CAROUSEL_INDEX,
+    payload: length
+})
