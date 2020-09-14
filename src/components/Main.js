@@ -8,7 +8,6 @@ import Profile from './Profile';
 import Bazaar from './Bazaar';
 import Sell from './Sell';
 import Table from './Table';
-import Buy from './Buy';
 
 import {Switch,
     Redirect,
@@ -20,13 +19,25 @@ import {setAnimating,
         carouselNext,
         carouselPrev,
         startCarouselAnimating,
-        startCarouselIndex} from '../redux/actionCreators'
+        startCarouselIndex,
+        sellItem,
+        prepareItem,
+        toggleConfirmModal,
+        toggleConfirmedModal,
+        editItem,
+        removeItem,
+        toggleEditingModal,
+        addItem} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
     activeIndex: state.carouselActiveIndex,
     users: state.users,
-    tables: state.tables
+    tables: state.tables,
+    confirmModalOpen: state.confirmModalOpen,
+    confirmedModalOpen: state.confirmedModalOpen,
+    itemBeingProcessed: state.itemBeingProcessed,
+    editingModalOpen: state.editingModalOpen
 })
 
 const mapDispatchToProps=dispatch=>({
@@ -34,7 +45,15 @@ const mapDispatchToProps=dispatch=>({
     carouselNext: (length,index)=>dispatch(carouselNext(length,index)),
     carouselPrev: (length,index)=>dispatch(carouselPrev(length,index)),
     startCarouselAnimating: (length)=>dispatch(startCarouselAnimating(length)),
-    startCarouselIndex: (length)=>dispatch(startCarouselIndex(length))
+    startCarouselIndex: (length)=>dispatch(startCarouselIndex(length)),
+    sellItem: (itemId,tableId)=>dispatch(sellItem(itemId,tableId)),
+    toggleConfirmModal: ()=>dispatch(toggleConfirmModal()),
+    toggleConfirmedModal: ()=>dispatch(toggleConfirmedModal()),
+    prepareItem: (itemId,tableId)=>dispatch(prepareItem(itemId,tableId)),
+    editItem: (itemId,tableId,values)=>dispatch(editItem(itemId,tableId,values)),
+    removeItem: (itemId,tableId)=>dispatch(removeItem(itemId,tableId)),
+    toggleEditingModal: ()=>dispatch(toggleEditingModal()),
+    addItem: (tableId,values)=>dispatch(addItem(tableId,values))
 })
 
 class Main extends Component{
@@ -45,7 +64,15 @@ class Main extends Component{
     render(){
         const activeUser=this.props.users.find(user=>user.active);
         const ProfileWithId=({match})=><Profile user={this.props.users.find(user=>user.id===Number(match.params.userId))}/>
-        const TableWithId=({match})=><Table table={this.props.tables.find(table=>table.id===Number(match.params.tableId))} />    
+        const TableWithId=({match})=><Table table={this.props.tables.find(table=>table.id===Number(match.params.tableId))} 
+        sellItem={this.props.sellItem} 
+        toggleConfirmModal={this.props.toggleConfirmModal}
+        toggleConfirmedModal={this.props.toggleConfirmedModal}
+        prepareItem={this.props.prepareItem}
+        confirmModalOpen={this.props.confirmModalOpen}
+        confirmedModalOpen={this.props.confirmedModalOpen}
+        itemBeingProcessed={this.props.itemBeingProcessed}
+         />    
         return(
             <>
                 <Header user={activeUser} />
@@ -66,10 +93,12 @@ class Main extends Component{
                         animating={this.props.animating} activeIndex={this.props.activeIndex} />
                     </Route>
                     <Route path='/sell'>
-                        <Sell user={activeUser} table={this.props.tables.find(table=>table.id===activeUser.tableId)}/>
+                        <Sell user={activeUser} table={this.props.tables.find(table=>table.id===activeUser.tableId)}
+                        sellItem={this.props.sellItem} removeItem={this.props.removeItem} editItem={this.props.editItem}
+                        editingModalOpen={this.props.editingModalOpen} toggleEditingModal={this.props.toggleEditingModal}
+                         addItem={this.props.addItem}   />
                     </Route>
                     <Route path='/bazaar/:tableId' component={TableWithId}/>
-                    <Route path='/buy' component={Buy} />
                     <Redirect to='/home/'/>
                 </Switch>
                 <Footer/>

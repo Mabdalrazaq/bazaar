@@ -20,7 +20,7 @@ class Bazaar extends Component{
                             <Row>
                                 <Col xs='12' sm='4'>
                                 <Media>
-                                    <Media left href="#">
+                                    <Media left>
                                         <Media object src={table.ownerImage} alt={table.ownerName} className='mediaImg mr-1'/>
                                     </Media>
                                     <Media body>
@@ -29,7 +29,7 @@ class Bazaar extends Component{
                                     </Media>
                                         {table.description}   
                                         <Media bottom>
-                                            <Link className='nav-link' to={'/bazaar/'+table.id} onClick={()=>{document.documentElement.scrollTop = 0;}}>
+                                            <Link className='card-link' to={'/bazaar/'+table.id} onClick={()=>{document.documentElement.scrollTop = 0;}}>
                                                 <Button color='warning' outline>Enter table</Button> 
                                             </Link>
                                         </Media>

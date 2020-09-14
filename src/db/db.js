@@ -130,7 +130,7 @@ export const tablesDB=[
 
             },
             {
-                id:1,
+                id:5,
                 name: 'Handmade Clock',
                 price: 10,
                 image: '/images/clock.jpg',
@@ -138,7 +138,7 @@ export const tablesDB=[
                 available: false
             },
             {
-                id:2,
+                id:6,
                 name: 'Old Apple',
                 price: 3,
                 image: '/images/oldapple.jpg',
@@ -147,7 +147,7 @@ export const tablesDB=[
 
             },
             {
-                id:3,
+                id:7,
                 name: 'My Brother\'s Hand',
                 price: 100,
                 image: '/images/hand.jpg',
@@ -157,7 +157,7 @@ export const tablesDB=[
 
             },
             {
-                id:4,
+                id:8,
                 name: 'A kidney',
                 price: 76,
                 image: '/images/kidney.jpg',
@@ -166,7 +166,7 @@ export const tablesDB=[
 
             },
             {
-                id:1,
+                id:9,
                 name: 'Handmade Clock',
                 price: 10,
                 image: '/images/clock.jpg',
@@ -175,7 +175,7 @@ export const tablesDB=[
 
             },
             {
-                id:2,
+                id:10,
                 name: 'Old Apple',
                 price: 3,
                 image: '/images/oldapple.jpg',
@@ -184,7 +184,7 @@ export const tablesDB=[
 
             },
             {
-                id:3,
+                id:11,
                 name: 'My Brother\'s Hand',
                 price: 100,
                 image: '/images/hand.jpg',
@@ -193,7 +193,7 @@ export const tablesDB=[
 
             },
             {
-                id:4,
+                id:12,
                 name: 'A kidney',
                 price: 76,
                 image: '/images/kidney.jpg',
@@ -254,5 +254,33 @@ export const usersDB=[
             city: 'amman',
             description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
         }
+    }
+]
+
+export const soldItems=[
+    {
+        tableId: 1,
+        itemId: 3,
+        buyerId: 12345    
+    },
+    {
+        tableId: 2,
+        itemId: 3,
+        buyerId: 12345    
+    },
+    {
+        tableId: 3,
+        itemId: 3,
+        buyerId: 12345    
+    },
+    {
+        tableId: 5,
+        itemId: 3,
+        buyerId: 12345    
+    },
+    {
+        tableId: 11,
+        itemId: 3,
+        buyerId: 12345    
     }
 ]
