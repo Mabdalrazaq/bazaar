@@ -11,13 +11,30 @@ import Table from './Table';
 import {user, tables} from '../db/db';
 import {Switch,
     Redirect,
-    Route} from 'react-router-dom';
+    Route,
+    withRouter} from 'react-router-dom';
+
+import {connect} from 'react-redux';
+import {setAnimating,carouselNext,carouselPrev} from '../redux/actionCreators'
+
 
 const table=tables.find(table=>table.id=user.info.tableInfo.tableId);
+
+const mapStateToProps=state=>({
+    animating: state.carouselAnimating,
+    activeIndex: state.carouselActiveIndex
+})
+
+const mapDispatchToProps=dispatch=>({
+    setAnimating: (bool,index)=>dispatch(setAnimating(bool,index)),
+    carouselNext: (length,index)=>dispatch(carouselNext(length,index)),
+    carouselPrev: (length,index)=>dispatch(carouselPrev(length,index))
+})
 
 class Main extends Component{
 
     render(){
+
         return(
             <>
                 <Header user={user} />
@@ -33,7 +50,9 @@ class Main extends Component{
                         <Contact/>
                     </Route>
                     <Route exact path='/bazaar'>
-                        <Bazaar tables={tables}/>
+                        <Bazaar tables={tables} setAnimating={this.props.setAnimating}
+                        carouselNext={this.props.carouselNext} carouselPrev={this.props.carouselPrev}
+                        animating={this.props.animating} activeIndex={this.props.activeIndex} />
                     </Route>
                     <Route path='/sell'>
                         <Sell user={user} table={table}/>
@@ -50,7 +69,7 @@ class Main extends Component{
 
 
 
-export default Main;
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Main));
 
 
 
