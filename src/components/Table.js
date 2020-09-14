@@ -19,8 +19,8 @@ import {Container,
 
 function Table (props){
     const [confirmButtonDisabled,setConfirmButtonDisabled]=useState(true);
-    const handleBuying=(itemId,tableId)=>{
-        props.prepareItem(itemId,tableId)
+    const handleBuying=id=>{
+        props.prepareItem(id)
         props.toggleConfirmModal();
     }
 
@@ -28,7 +28,8 @@ function Table (props){
         props.toggleConfirmModal();
         props.toggleConfirmedModal();
         const item=props.itemBeingProcessed
-        props.sellItem(item.itemId,item.tableId);
+        console.log(item);
+        props.sellItem(item);
     }
 
     const checkConfirm=evt=>{
@@ -37,6 +38,8 @@ function Table (props){
         else
             setConfirmButtonDisabled(true);
     }
+
+    const items=props.items.filter(item=>item.tableId===props.table.id);
 
     return (
         <>
@@ -63,7 +66,7 @@ function Table (props){
             </Modal>
             <Container>
                 <Row>
-                    {props.table.items.map(item=>{
+                    {items.map(item=>{
                         return(
                             <Col xs='12' sm='12' md='6' lg='4' key={item.id} className='my-3' >
                                 <Card >
@@ -73,7 +76,7 @@ function Table (props){
                                         <CardSubtitle><Badge pill color='info'>{item.price} JOD</Badge></CardSubtitle>
                                         <CardText className='cardTextHeight'>{item.description}</CardText>
                                     </CardBody>
-                                        <Button onClick={()=>handleBuying(item.id,props.table.id)} color={item.available?'warning':'secondary'} disabled={!item.available} block>{item.available? 'Buy this':'Sold'}</Button>
+                                        <Button onClick={()=>handleBuying(item.id)} color={item.available?'warning':'secondary'} disabled={!item.available} block>{item.available? 'Buy this':'Sold'}</Button>
                                 </Card>
                             </Col>
                         )

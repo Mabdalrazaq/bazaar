@@ -37,7 +37,8 @@ const mapStateToProps=state=>({
     confirmModalOpen: state.confirmModalOpen,
     confirmedModalOpen: state.confirmedModalOpen,
     itemBeingProcessed: state.itemBeingProcessed,
-    editingModalOpen: state.editingModalOpen
+    editingModalOpen: state.editingModalOpenm,
+    items: state.items
 })
 
 const mapDispatchToProps=dispatch=>({
@@ -46,12 +47,12 @@ const mapDispatchToProps=dispatch=>({
     carouselPrev: (length,index)=>dispatch(carouselPrev(length,index)),
     startCarouselAnimating: (length)=>dispatch(startCarouselAnimating(length)),
     startCarouselIndex: (length)=>dispatch(startCarouselIndex(length)),
-    sellItem: (itemId,tableId)=>dispatch(sellItem(itemId,tableId)),
+    sellItem: id=>dispatch(sellItem(id)),
     toggleConfirmModal: ()=>dispatch(toggleConfirmModal()),
     toggleConfirmedModal: ()=>dispatch(toggleConfirmedModal()),
-    prepareItem: (itemId,tableId)=>dispatch(prepareItem(itemId,tableId)),
-    editItem: (itemId,tableId,values)=>dispatch(editItem(itemId,tableId,values)),
-    removeItem: (itemId,tableId)=>dispatch(removeItem(itemId,tableId)),
+    prepareItem: id=>dispatch(prepareItem(id)),
+    editItem: (id,values)=>dispatch(editItem(id,values)),
+    removeItem: id=>dispatch(removeItem(id)),
     toggleEditingModal: ()=>dispatch(toggleEditingModal()),
     addItem: (tableId,values)=>dispatch(addItem(tableId,values))
 })
@@ -72,7 +73,7 @@ class Main extends Component{
         confirmModalOpen={this.props.confirmModalOpen}
         confirmedModalOpen={this.props.confirmedModalOpen}
         itemBeingProcessed={this.props.itemBeingProcessed}
-         />    
+        items={this.props.items} />    
         return(
             <>
                 <Header user={activeUser} />
@@ -90,13 +91,13 @@ class Main extends Component{
                     <Route exact path='/bazaar'>
                         <Bazaar tables={this.props.tables} setAnimating={this.props.setAnimating}
                         carouselNext={this.props.carouselNext} carouselPrev={this.props.carouselPrev}
-                        animating={this.props.animating} activeIndex={this.props.activeIndex} />
+                        animating={this.props.animating} activeIndex={this.props.activeIndex} items={this.props.items} />
                     </Route>
                     <Route path='/sell'>
                         <Sell user={activeUser} table={this.props.tables.find(table=>table.id===activeUser.tableId)}
                         sellItem={this.props.sellItem} removeItem={this.props.removeItem} editItem={this.props.editItem}
                         editingModalOpen={this.props.editingModalOpen} toggleEditingModal={this.props.toggleEditingModal}
-                         addItem={this.props.addItem}   />
+                         addItem={this.props.addItem} items={this.props.items}  />
                     </Route>
                     <Route path='/bazaar/:tableId' component={TableWithId}/>
                     <Redirect to='/home/'/>

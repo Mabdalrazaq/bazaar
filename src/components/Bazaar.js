@@ -15,6 +15,7 @@ class Bazaar extends Component{
         return (
             <Container>
                 {this.props.tables.map(table=>{
+                    const items=this.props.items.filter(item=>item.tableId===table.id);
                     return(
                         <div key={table.id} className='my-5'>
                             <Row>
@@ -27,7 +28,6 @@ class Bazaar extends Component{
                                         <Media heading>
                                         {table.ownerName}         
                                     </Media>
-                                        {table.description}   
                                         <Media bottom>
                                             <Link className='card-link' to={'/bazaar/'+table.id} onClick={()=>{document.documentElement.scrollTop = 0;}}>
                                                 <Button color='warning' outline>Enter table</Button> 
@@ -39,9 +39,9 @@ class Bazaar extends Component{
                                 <Col xs='12' sm='8'>
                                     <Carousel
                                     activeIndex={this.props.activeIndex[table.id]}
-                                    next={()=>this.props.carouselNext(table.items.length,table.id)}
-                                    previous={()=>this.props.carouselPrev(table.items.length,table.id)} >
-                                        {table.items.map(item=>{
+                                    next={()=>this.props.carouselNext(items.length,table.id)}
+                                    previous={()=>this.props.carouselPrev(items.length,table.id)} >
+                                        {items.map(item=>{
                                             return(
                                                 <CarouselItem onExiting={() => this.props.setAnimating(true,table.id)}
                                                 onExited={() => this.props.setAnimating(false,table.id)}
@@ -52,8 +52,8 @@ class Bazaar extends Component{
                                                 </CarouselItem>
                                             )
                                         })}
-                                        <CarouselControl direction="prev" directionText="Previous" onClickHandler={()=>this.props.carouselPrev(table.items.length,table.id)} />
-                                        <CarouselControl direction="next" directionText="Next" onClickHandler={()=>this.props.carouselNext(table.items.length,table.id)} />
+                                        <CarouselControl direction="prev" directionText="Previous" onClickHandler={()=>this.props.carouselPrev(items.length,table.id)} />
+                                        <CarouselControl direction="next" directionText="Next" onClickHandler={()=>this.props.carouselNext(items.length,table.id)} />
                                     </Carousel>
                                 </Col>
                             </Row>

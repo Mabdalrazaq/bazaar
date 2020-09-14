@@ -34,12 +34,9 @@ export const startCarouselIndex=length=>({
     payload: length
 })
 
-export const sellItem=(itemId,tableId)=>({
+export const sellItem=id=>({
     type: actionTypes.SELL_ITEM,
-    payload: {
-        itemId,
-        tableId
-    }
+    payload: id
 })
 
 export const toggleConfirmModal=()=>({
@@ -50,27 +47,20 @@ export const toggleConfirmedModal=()=>({
     type: actionTypes.TOGGLE_CONFIRMED_MODAL
 })
 
-export const prepareItem=(itemId,tableId)=>({
+export const prepareItem=id=>({
     type: actionTypes.PREPARE_ITEM,
-    payload:{
-        itemId,
-        tableId
-    }
+    payload:id
 })
 
-export const removeItem=(itemId,tableId)=>({
+export const removeItem=id=>({
     type: actionTypes.REMOVE_ITEM,
-    payload:{
-        itemId,
-        tableId
-    }
+    payload:id
 })
 
-export const editItem=(itemId,tableId,values)=>({
+export const editItem=(id,values)=>({
     type: actionTypes.EDIT_ITEM,
     payload: {
-        itemId,
-        tableId,
+        id,
         values
     }
 })

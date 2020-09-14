@@ -1,12 +1,11 @@
 import * as actionTypes from './actionTypes';
 
 const itemBeingProcessed=(state={
-    itemId: -1,
-    tableId: -1
+    id:-1
 },action)=>{
     switch(action.type){
         case actionTypes.PREPARE_ITEM:
-            return {...state, itemId: action.payload.itemId, tableId: action.payload.tableId}
+            return action.payload;
         default:
             return state;
     }

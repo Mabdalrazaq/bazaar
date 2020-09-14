@@ -11,6 +11,7 @@ import itemBeingProcessed from './itemBeingProcessed';
 import {createForms} from 'react-redux-form'
 import {initialConfirm} from './forms';
 import editingModalOpen from './editingModalOpen';
+import items from './items';
 export const configureStore=()=>{
     const store=createStore(
         combineReducers({
@@ -21,7 +22,8 @@ export const configureStore=()=>{
             confirmModalOpen,
             confirmedModalOpen,
             itemBeingProcessed,
-            editingModalOpen
+            editingModalOpen,
+            items
             // ...createForms({
             //     confirmForm: initialConfirm
             // })
