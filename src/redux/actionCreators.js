@@ -163,6 +163,8 @@ export const fetchTables=()=>async dispatch=>{
         if(response.status>=400)
             throw new Error('status code > 400');
         dispatch(addTables(tables));
+        dispatch(startCarouselAnimating(tables.length));
+        dispatch(startCarouselIndex(tables.length));
         
     }catch(err){
         console.log(err);
@@ -178,7 +180,6 @@ export const fetchItems=()=>async dispatch=>{
         if(response.status>=400)
             throw new Error('status code > 400');
         dispatch(addItems(items));
-        
     }catch(err){
         console.log(err);
         dispatch(itemsFailed(err.message));

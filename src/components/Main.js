@@ -66,8 +66,6 @@ class Main extends Component{
     componentDidMount(){
         this.props.fetchTables();
         this.props.fetchItems();
-        this.props.startCarouselAnimating(this.props.tables.tables.length);
-        this.props.startCarouselIndex(this.props.tables.tables.length);
     }
     render(){
         const activeUser=this.props.activeUser
