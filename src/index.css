@@ -80,6 +80,7 @@ code {
   margin-top:30px;
   margin-bottom: 30px;
   border-radius: 30px;
+  min-height: 400px;
 }
 
 .background-2{

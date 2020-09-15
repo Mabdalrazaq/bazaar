@@ -29,15 +29,15 @@ function Home (props){
                     <Card className='bg-warning mb-5 opac'>
                         <CardHeader><h2>Our Mission</h2></CardHeader>
                         <CardBody>
-                            <h3>Bazaar is a platform for talented and creative innovators to market thier products with a magical touch of culture.</h3>
+                            <h3>We want you to get the extraordinary experience of the bazaar in the digital world.</h3>
                         </CardBody>
                     </Card>
                 </Col>
                 <Col xs='12' sm='10' md='8' lg='4'>
                     <Card className='bg-warning mb-5 opac'>
-                        <CardHeader><h2>What is Bazaar</h2></CardHeader>
+                        <CardHeader><h2>How it works</h2></CardHeader>
                         <CardBody>
-                            <h3>Bazaar is a platform for talented and creative innovators to market thier products with a magical touch of culture.</h3>
+                            <h3>Explore the wonders of the Bazaar either by wandering around the table or by renting one of them.</h3>
                         </CardBody>
                     </Card>
                 </Col>
