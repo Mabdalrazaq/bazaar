@@ -1,4 +1,4 @@
-import React,{useState,Component} from 'react';
+import React,{Component} from 'react';
 import {Col,
     Row,
     Container,
@@ -14,8 +14,8 @@ class Bazaar extends Component{
     render(){
         return (
             <Container>
-                {this.props.tables.map(table=>{
-                    const items=this.props.items.filter(item=>item.tableId===table.id);
+                {this.props.tables.tables.map(table=>{
+                    const items=this.props.items.items.filter(item=>item.tableId===table.id);
                     return(
                         <div key={table.id} className='my-5'>
                             <Row>

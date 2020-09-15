@@ -27,7 +27,9 @@ import {setAnimating,
         editItem,
         removeItem,
         toggleEditingModal,
-        addItem} from '../redux/actionCreators'
+        addItem,
+        fetchItems,
+        fetchTables} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -38,7 +40,8 @@ const mapStateToProps=state=>({
     confirmedModalOpen: state.confirmedModalOpen,
     itemBeingProcessed: state.itemBeingProcessed,
     editingModalOpen: state.editingModalOpenm,
-    items: state.items
+    items: state.items,
+    activeUser: state.activeUser
 })
 
 const mapDispatchToProps=dispatch=>({
@@ -51,21 +54,25 @@ const mapDispatchToProps=dispatch=>({
     toggleConfirmModal: ()=>dispatch(toggleConfirmModal()),
     toggleConfirmedModal: ()=>dispatch(toggleConfirmedModal()),
     prepareItem: id=>dispatch(prepareItem(id)),
-    editItem: (id,values)=>dispatch(editItem(id,values)),
+    editItem: sent=>dispatch(editItem(sent)),
     removeItem: id=>dispatch(removeItem(id)),
     toggleEditingModal: ()=>dispatch(toggleEditingModal()),
-    addItem: (tableId,values)=>dispatch(addItem(tableId,values))
+    addItem: (tableId,values)=>dispatch(addItem(tableId,values)),
+    fetchItems: ()=>dispatch(fetchItems()),
+    fetchTables: ()=>dispatch(fetchTables())
 })
 
 class Main extends Component{
     componentDidMount(){
-        this.props.startCarouselAnimating(this.props.tables.length);
-        this.props.startCarouselIndex(this.props.tables.length);
+        this.props.fetchTables();
+        this.props.fetchItems();
+        this.props.startCarouselAnimating(this.props.tables.tables.length);
+        this.props.startCarouselIndex(this.props.tables.tables.length);
     }
     render(){
-        const activeUser=this.props.users.find(user=>user.active);
-        const ProfileWithId=({match})=><Profile user={this.props.users.find(user=>user.id===Number(match.params.userId))}/>
-        const TableWithId=({match})=><Table table={this.props.tables.find(table=>table.id===Number(match.params.tableId))} 
+        const activeUser=this.props.activeUser
+        const ProfileWithId=({match})=><Profile user={this.props.activeUser}/>
+        const TableWithId=({match})=><Table table={this.props.tables.tables.find(table=>table.id===Number(match.params.tableId))} 
         sellItem={this.props.sellItem} 
         toggleConfirmModal={this.props.toggleConfirmModal}
         toggleConfirmedModal={this.props.toggleConfirmedModal}
@@ -94,7 +101,7 @@ class Main extends Component{
                         animating={this.props.animating} activeIndex={this.props.activeIndex} items={this.props.items} />
                     </Route>
                     <Route path='/sell'>
-                        <Sell user={activeUser} table={this.props.tables.find(table=>table.id===activeUser.tableId)}
+                        <Sell user={activeUser} table={this.props.tables.tables.find(table=>table.id===activeUser.tableId)}
                         sellItem={this.props.sellItem} removeItem={this.props.removeItem} editItem={this.props.editItem}
                         editingModalOpen={this.props.editingModalOpen} toggleEditingModal={this.props.toggleEditingModal}
                          addItem={this.props.addItem} items={this.props.items}  />

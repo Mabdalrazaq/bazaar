@@ -40,7 +40,7 @@ class Sell extends Component{
     render(){
 
         const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
-        const items=this.props.items.filter(item=>item.tableId===this.props.table.id);
+        const items=this.props.items.items.filter(item=>item.tableId===this.props.table.id);
 
         const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
 
@@ -59,8 +59,9 @@ class Sell extends Component{
         
         const handleSumbit=values=>{
             toggleEditingModal();
+            const sent={...this.state.item,...values}
             if(this.state.editing)
-                this.props.editItem(this.state.item.id,values);
+                this.props.editItem(sent);
             else
                 this.props.addItem(this.props.table.id,values);
         }

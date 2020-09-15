@@ -11,7 +11,11 @@ AWS.config.update({
   
 const dynamodb = new AWS.DynamoDB();
 const docClient= new AWS.DynamoDB.DocumentClient();
-let id=20;
+
+let itemsId=20;
+let usersId=3;
+let tablesId=3;
+
 let params;
 
 itemsRouter.get('/',async(req,res)=>{
@@ -31,11 +35,12 @@ itemsRouter.get('/',async(req,res)=>{
 itemsRouter.post('/',async(req,res)=>{
     params={
         TableName: 'Items',
-        Item:{ ...req.body.item, id:++id}
+        Item:{ ...req.body.item, id:++itemsId}
     }
     try{
         const item=await docClient.put(params).promise();
         console.log(item);
+        item.id=itemsId;
         res.json(item);
     }catch(err){
         console.log(err)
@@ -44,21 +49,35 @@ itemsRouter.post('/',async(req,res)=>{
 });
 
 itemsRouter.put('/:itemId',async(req,res)=>{
-    params={
-        TableName: 'Items',
-        Key:{
-            "id":Number(req.params.itemId)
-        },
-        UpdateExpression:'set price=:p, #nm=:n',
-        ExpressionAttributeNames:{
-            '#nm': 'name'
-        },
-        ExpressionAttributeValues: {
-            ":p": req.body.price,
-            ":n": req.body.name
-        },
-        ReturnValues:"UPDATED_NEW"
-    }
+    if(!req.query.sell)
+        params={
+            TableName: 'Items',
+            Key:{
+                "id":Number(req.params.itemId)
+            },
+            UpdateExpression:'set price=:p, #nm=:n, description=:d',
+            ExpressionAttributeNames:{
+                '#nm': 'name'
+            },
+            ExpressionAttributeValues: {
+                ":p": req.body.price,
+                ":n": req.body.name,
+                ":d": req.body.description
+            },
+            ReturnValues:"UPDATED_NEW"
+        }    
+    else
+        params={
+            TableName: 'Items',
+            Key:{
+                "id":Number(req.params.itemId)
+            },
+            UpdateExpression:'set available=:av',
+            ExpressionAttributeValues: {
+                ":av": false
+            },
+            ReturnValues:'UPDATED_NEW'
+        }
     try{
         const item= await docClient.update(params).promise();
         console.log(item)
@@ -69,13 +88,24 @@ itemsRouter.put('/:itemId',async(req,res)=>{
     }
 })
 
-// id:9,
-// tableId:2,
-// name: 'Handmade Clock',
-// price: 10,
-// image: '/images/clock.jpg',
-// description: 'A clock that was made before my father, it is hand made and unique',
-// available: true
+itemsRouter.delete('/:itemId',async(req,res)=>{
+    params = {
+        TableName:'Items',
+        Key:{
+            id:Number(req.params.itemId)
+        },
+    };
+    try{
+        await docClient.delete(params).promise();
+        res.sendStatus(204)
+    }catch(err){
+        console.log(err.message);
+        res.status(400).send(err.message);
+    }
+})
+
+itemsRouter.put
+
 
 
 module.exports = itemsRouter;

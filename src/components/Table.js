@@ -39,7 +39,7 @@ function Table (props){
             setConfirmButtonDisabled(true);
     }
 
-    const items=props.items.filter(item=>item.tableId===props.table.id);
+    const items=props.items.items.filter(item=>item.tableId===props.table.id);
 
     return (
         <>

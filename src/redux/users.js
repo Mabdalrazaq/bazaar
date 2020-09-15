@@ -1,7 +1,10 @@
 import * as actionTypes from './actionTypes';
-import {usersDB} from '../db/db';
 
-const users=(state=usersDB,action)=>{
+const users=(state={
+    users: [],
+    isLoading: true,
+    errMess: null
+},action)=>{
     switch(action.type){
         default:
             return state;

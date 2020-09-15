@@ -102,63 +102,63 @@ const seedData=async()=>{
     }catch(err){
         console.log(err.message);
     }
-
-    await new Promise((resolve,reject)=>{
-        db.usersDB.forEach(async user=>{
-            params={
-                TableName: 'Users',
-                Item:{
-                    ...user
-                }
-            }
-            try{
-                const data=await docClient.put(params).promise()
-                resolve(data)
-                console.log(`user ${user.id} added`)
-            }catch(err){
-                console.log(err);
-                reject(err);
-            }
-        });
-    })
-
-
-    await new Promise((resolve,reject)=>{
-        db.tablesDB.forEach(async table=>{
+    
+    await new Promise(async(resolve,reject)=>{
+        for(let i=0;i<db.tablesDB.length;i++){
             params={
                 TableName: 'Tables',
                 Item:{
-                    ...table
-                }
-            }
-            try{
-                const data=await docClient.put(params).promise()
-                resolve(data)
-                console.log(`table ${table.id} added`)
-            }catch(err){
-                console.log(err);
-                reject(err);
-            }
-        });
-    })
-
-    await new Promise((resolve,reject)=>{
-        db.itemsDB.forEach(async item=>{
-            params={
-                TableName: 'Items',
-                Item:{
-                    ...item
+                    ...db.tablesDB[i]
                 }
             }
             try{
                 const data=await docClient.put(params).promise();
-                console.log(`item ${item.id} added`);
+                console.log(`table ${db.tablesDB[i].id} added`);
                 resolve(data);
             }catch(err){
                 console.log(err);
-                reject(err);
+                reject(err)
             }
-        });
+        }
+    })
+
+
+    await new Promise(async(resolve,reject)=>{
+        for(let i=0;i<db.usersDB.length;i++){
+            params={
+                TableName: 'Users',
+                Item:{
+                    ...db.usersDB[i]
+                }
+            }
+            try{
+                const data=await docClient.put(params).promise();
+                console.log(`user ${db.usersDB[i].id} added`);
+                resolve(data);
+            }catch(err){
+                console.log(err);
+                reject(err)
+            }
+        }
+    })
+
+    await new Promise(async(resolve,reject)=>{
+        for(let i=0;i<db.itemsDB.length;i++){
+            params={
+                TableName: 'Items',
+                Item:{
+                    ...db.itemsDB[i]
+                }
+            }
+            try{
+                const data=await docClient.put(params).promise();
+                console.log(`item ${db.itemsDB[i].id} added`);
+                resolve(data);
+            }catch(err){
+                console.log(err);
+                reject(err)
+            }
+        }
     })
 
 }
