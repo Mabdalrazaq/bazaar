@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
 
-const activeUserId=10
+const activeUserId=3
 
 export const carouselNext=(length,index)=>({
     type: actionTypes.CAROUSEL_NEXT,
@@ -37,9 +37,10 @@ export const startCarouselIndex=length=>({
     payload: length
 })
 
-export const sellItem=id=>async dispatch=>{
-    const response = await fetch(serverBase+'/items/'+id+'?'+new URLSearchParams({
-        sell: true
+export const sellItem=(itemId,buyerId)=>async dispatch=>{
+    const response = await fetch(serverBase+'/items/'+itemId+'?'+new URLSearchParams({
+        sell: true,
+        buyerId
     }),
     {
         method: 'PUT',
@@ -48,7 +49,10 @@ export const sellItem=id=>async dispatch=>{
     console.log(jsonResponse);
     dispatch({
         type: actionTypes.SELL_ITEM,
-        payload: id
+        payload: {
+            itemId,
+            buyerId
+        }
     })
 }
 

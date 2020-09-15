@@ -29,7 +29,7 @@ function Table (props){
         props.toggleConfirmedModal();
         const item=props.itemBeingProcessed
         console.log(item);
-        props.sellItem(item);
+        props.sellItem(item,props.activeUser.id);
     }
 
     const checkConfirm=evt=>{

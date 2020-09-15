@@ -64,3 +64,6 @@ code {
 .cardTextHeight{
   height: 80px;
 }
+.cardHeight{
+  min-height:560px;
+}

@@ -70,9 +70,10 @@ itemsRouter.put('/:itemId',async(req,res)=>{
             Key:{
                 "id":Number(req.params.itemId)
             },
-            UpdateExpression:'set available=:av',
+            UpdateExpression:'set available=:av, buyerId=:id',
             ExpressionAttributeValues: {
-                ":av": false
+                ":av": false,
+                ":id": Number(req.query.buyerId)
             },
             ReturnValues:'UPDATED_NEW'
         }

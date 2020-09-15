@@ -31,7 +31,7 @@ import {setAnimating,
         fetchItems,
         fetchTables,
         loadActiveUser,
-        addTable} from '../redux/actionCreators'
+        addTable, itemsLoading} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -52,7 +52,7 @@ const mapDispatchToProps=dispatch=>({
     carouselPrev: (length,index)=>dispatch(carouselPrev(length,index)),
     startCarouselAnimating: (length)=>dispatch(startCarouselAnimating(length)),
     startCarouselIndex: (length)=>dispatch(startCarouselIndex(length)),
-    sellItem: id=>dispatch(sellItem(id)),
+    sellItem: (itemId,buyerId)=>dispatch(sellItem(itemId,buyerId)),
     toggleConfirmModal: ()=>dispatch(toggleConfirmModal()),
     toggleConfirmedModal: ()=>dispatch(toggleConfirmedModal()),
     prepareItem: id=>dispatch(prepareItem(id)),
@@ -82,7 +82,8 @@ class Main extends Component{
         confirmModalOpen={this.props.confirmModalOpen}
         confirmedModalOpen={this.props.confirmedModalOpen}
         itemBeingProcessed={this.props.itemBeingProcessed}
-        items={this.props.items} />
+        items={this.props.items} 
+        activeUser={this.props.activeUser}   />
         if(this.props.tables.isLoading||this.props.activeUser.loadingInfo.isLoading||this.props.items.isLoading)
             return null
         else if(this.props.tables.errMess||this.props.activeUser.loadingInfo.errMess||this.props.items.errMess)
@@ -105,7 +106,7 @@ class Main extends Component{
                         <Home/>
                     </Route>
                     <Route path='/profiles'>
-                        <Profile user={this.props.activeUser}/>
+                        <Profile user={this.props.activeUser} items={this.props.items.items}/>
                     </Route>
                     <Route path='/about'>
                         <About/>

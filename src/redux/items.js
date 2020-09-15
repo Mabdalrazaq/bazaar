@@ -32,8 +32,8 @@ const items=(state={
         case actionTypes.SELL_ITEM:
             return {...state, items:
                 state.items.map(item=>{
-                    if(item.id===action.payload)
-                        return {...item,available: false}
+                    if(item.id===action.payload.itemId)
+                        return {...item,available: false, buyerId:action.payload.buyerId}
                     else 
                         return item;
                 })};

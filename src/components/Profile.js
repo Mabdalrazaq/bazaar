@@ -1,7 +1,253 @@
-import React from 'react';
+import React,{Component} from 'react';
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    CardImg,
+    Button,
+    Container,
+    Row,
+    Col,
+    Label,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Tooltip,
 
-function Profile (props){
-    return <h1>{props.user.name}</h1>
+
+} from 'reactstrap';
+
+import {
+    Errors,
+    Control,
+    LocalForm
+} from 'react-redux-form';
+
+import {validEmail,isNumber,minLength,maxLength,required} from '../util/validators'
+import {Link} from 'react-router-dom';
+class Profile extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            editingModalOpen: false,
+            user: props.user,
+            tooltips:{
+                name:false,
+                phone:false,
+                email: false,
+                address: false
+
+            }
+        }
+    }
+
+    render(){
+        const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
+
+        const handleSumbit=values=>{
+            toggleEditingModal();
+        }
+
+        const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
+
+        const soldItems=this.props.items.filter(item=>{
+            if(item.tableId===this.props.user.tableId&&item.available===false)
+                return true
+        })
+        const countSold=soldItems.length;
+        const boughtItems=this.props.items.filter(item=>{
+            if(item.buyerId===this.props.user.id)
+                return true
+        })
+        const countBought=boughtItems.length;
+        const totalSold=soldItems.reduce((acc,current)=>acc+current.price,0);
+        const totalBought=boughtItems.reduce((acc,current)=>acc+current.price,0);
+        const total=totalSold-totalBought;
+        const NoTable=()=>{
+            return(
+                <>
+                    <h1>You do not have a table for today</h1>
+                    <h4 className='mt-5'>Rent a table from <Link to='/sell'>here</Link></h4>
+                </>
+            )
+        }
+    
+        const YesTable=()=>{
+            return(
+                <>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Number of sold items:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{countSold}</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Sold Items total worth:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{totalSold}</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Number of bought Items:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{countBought}</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Bought Items total worth:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{totalBought}</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Total:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{total>0?`We owe you ${total} JOD!`: `You owe us ${total} JOD`}</strong></h6>
+                        </Col>
+                    </Row>
+                </>
+            )
+        }
+        return(
+            <>
+                <Modal isOpen={this.state.editingModalOpen} toggle={toggleEditingModal}>
+                    <ModalHeader toggle={toggleEditingModal}>Edit item</ModalHeader>
+                    <ModalBody>
+                        <LocalForm onSubmit={values=>handleSumbit(values)}>
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='name' sm='3' id='nameLabel'>Name</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('name')} isOpen={this.state.tooltips.name} target='nameLabel'>Choose a nice nickname</Tooltip>
+                                <Col sm='9'>
+                                    <Control.text model='.name' id='name' name='name' className='form-control' value={this.state.item.name} onChange={(evt)=>this.setState({item: {...this.state.item,name: evt.target.value}})}
+                                    validators={{
+                                        required,
+                                        maxLength: maxLength(25)
+                                    }} />
+                                    
+                                    <Errors className='text-danger' model='.name' show='touched' component='li' messages={{
+                                        required: 'Required',
+                                        maxLength: 'Name can not be more than 25 characters'
+                                    }} />
+
+
+                                </Col>
+                            </Row>  
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='price' sm='3' id='priceLabel'>Price</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('price')} isOpen={this.state.tooltips.price} target='priceLabel'>Price in JOD</Tooltip>
+                                <Col sm='9'>
+                                    <Control.text model='.price' id='price' name='price' className='form-control'  value={this.state.item.price} onChange={(evt)=>this.setState({item: {...this.state.item,price: evt.target.value}})}
+                                    validators={{
+                                        required,
+                                        isNumber,
+                                        maxLength:maxLength(3)
+                                    }} />
+
+                                    <Errors className='text-danger' model='.price' show='touched' component='li' messages={{
+                                        required: 'Required',
+                                        maxLength: 'can not be more than 3 digits',
+                                        isNumber: 'Must be a number'
+                                    }}/>
+                                </Col>
+                            </Row>  
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='file' sm='3' id='imageLabel'>Change Image</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('image')} isOpen={this.state.tooltips.image} target='imageLabel'>{this.state.editing?'Upload a new image only if you want to change the original':'Upload a real picture for this item'}</Tooltip>
+                                <Col sm='9'>
+                                    <Control.file model='.file' id='file' name='file' className='form-control-file'/>
+                                </Col>
+                            </Row>
+                            
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='description' sm='3' id='descriptionLabel'>Description</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('description')} isOpen={this.state.tooltips.description} target='descriptionLabel'>Keep it short and honest</Tooltip>
+                                <Col sm='9'>
+                                    <Control.textarea model='.description' id='description' name='description' className='form-control' rows='5'  value={this.state.item.description} onChange={(evt)=>this.setState({item: {...this.state.item,description: evt.target.value}})}
+                                    validators={{
+                                        maxLength: maxLength(115)
+                                    }} />
+                                    
+                                    <Errors className='text-danger' model='.description' show='touched' component='li' messages={{
+                                        maxLength: 'Can not exceed 115 characters'
+                                    }} />
+                                </Col>
+                            </Row>
+                            <Button block color='warning' type='submit'>Save</Button>
+                        </LocalForm>
+                    </ModalBody>
+                </Modal>
+                <Container>
+                    <Row>
+                        <Col xs='12' md='6'>
+                            <Card>
+                                <CardHeader><h3>Your Profile</h3></CardHeader>
+                                <CardBody className='container cardHeight'>
+                                    <Row>
+                                        <Col xs='6'>
+                                            <CardImg className='mediaImg' src={'/'+this.props.user.image} />
+                                        </Col>
+                                        <Col xs='6' className='align-self-center'>
+                                            <Label className="btn btn-warning btn-block">
+                                                Change profile picture <input type="file" hidden />
+                                            </Label>
+                                        </Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col xs='12' className='mx-auto'>
+                                            <h6><strong>Name:</strong> {this.props.user.name}</h6>
+                                        </Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col xs='12' className='mx-auto'>
+                                            <h6><strong>Phone Number:</strong> {this.props.user.phone}</h6>
+                                        </Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col xs='12' className='mx-auto'>
+                                            <h6><strong>Email:</strong> {this.props.user.email}</h6>
+                                        </Col>
+                                    </Row>
+                                    <Row className='mt-3'>
+                                        <Col xs='12' className='mx-auto'>
+                                            <h4>Address Information:</h4>
+                                            <h6><strong>City:</strong> {this.props.user.address.city}</h6>
+                                            <h6><strong>Area:</strong> {this.props.user.address.area}</h6>
+                                            <h6><strong>Street:</strong> {this.props.user.address.street}</h6>
+                                            <h6><strong>House:</strong> {this.props.user.address.house}</h6>
+                                            <h6><strong>description:</strong> {this.props.user.address.description}</h6>
+                                        </Col>
+                                    </Row>
+                                    <Row className='mt-5'>
+                                        <Button outline color='warning' block onClick={toggleEditingModal}>Edit Profile</Button>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col xs='12' md='6'>
+                            <Card>
+                                <CardHeader><h3>Your money for today</h3></CardHeader>
+                                <CardBody className='cardHeight'>
+                                    {this.props.user.tableId===0? <NoTable/>: <YesTable/>}
+                                </CardBody>
+                            </Card>             
+                        </Col>
+                    </Row>
+                </Container>
+
+            </>
+        )
+    
+    }
 }
 
 export default Profile;

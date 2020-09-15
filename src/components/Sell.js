@@ -41,7 +41,6 @@ class Sell extends Component{
 
         const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
         const items=this.props.table!==undefined?this.props.items.items.filter(item=>item.tableId===this.props.table.id):null;
-        const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
 
         const getItem=(id)=>{
             return items.find(item=>item.id===id);
