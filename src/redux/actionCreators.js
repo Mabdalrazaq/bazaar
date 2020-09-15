@@ -259,3 +259,22 @@ export const addTable=(user)=>async dispatch=>{
     dispatch(fetchTables());
 }
 
+export const editUser=(sent)=>async dispatch=>{
+    const id=sent.id
+    const data={...sent}
+    const response = await fetch(serverBase+'/users/'+id,{
+        headers: {
+            'Content-Type': 'application/json'
+        },      
+        method: 'PUT',
+        body: JSON.stringify(data)
+    })
+    const jsonResponse= await response.json();
+    console.log(jsonResponse);
+    const changes=jsonResponse.Attributes;
+    dispatch({
+        type: actionTypes.UPDATE_ACTIVE_USER,
+        payload:changes
+    });
+}
+

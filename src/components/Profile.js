@@ -34,9 +34,7 @@ class Profile extends Component{
             tooltips:{
                 name:false,
                 phone:false,
-                email: false,
-                address: false
-
+                email: false
             }
         }
     }
@@ -46,6 +44,8 @@ class Profile extends Component{
 
         const handleSumbit=values=>{
             toggleEditingModal();
+            const sent={...this.state.user,...values};
+            this.props.editUser(sent);
         }
 
         const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
@@ -128,60 +128,87 @@ class Profile extends Component{
                                 <Label className='py-auto my-auto' htmlFor='name' sm='3' id='nameLabel'>Name</Label>
                                 <Tooltip placement='left' toggle={()=>toggleTooltip('name')} isOpen={this.state.tooltips.name} target='nameLabel'>Choose a nice nickname</Tooltip>
                                 <Col sm='9'>
-                                    <Control.text model='.name' id='name' name='name' className='form-control' value={this.state.item.name} onChange={(evt)=>this.setState({item: {...this.state.item,name: evt.target.value}})}
+                                    <Control.text model='.name' id='name' name='name' className='form-control' value={this.state.user.name} onChange={(evt)=>this.setState({user: {...this.state.user,name: evt.target.value}})}
                                     validators={{
                                         required,
-                                        maxLength: maxLength(25)
+                                        maxLength: maxLength(15)
                                     }} />
                                     
                                     <Errors className='text-danger' model='.name' show='touched' component='li' messages={{
                                         required: 'Required',
-                                        maxLength: 'Name can not be more than 25 characters'
+                                        maxLength: 'Name can not be more than 15 characters'
                                     }} />
 
 
                                 </Col>
                             </Row>  
                             <Row className='form-group'>
-                                <Label className='py-auto my-auto' htmlFor='price' sm='3' id='priceLabel'>Price</Label>
-                                <Tooltip placement='left' toggle={()=>toggleTooltip('price')} isOpen={this.state.tooltips.price} target='priceLabel'>Price in JOD</Tooltip>
+                                <Label className='py-auto my-auto' htmlFor='email' sm='3' id='emailLabel'>Email</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('email')} isOpen={this.state.tooltips.email} target='emailLabel'>Choose a valid email address</Tooltip>
                                 <Col sm='9'>
-                                    <Control.text model='.price' id='price' name='price' className='form-control'  value={this.state.item.price} onChange={(evt)=>this.setState({item: {...this.state.item,price: evt.target.value}})}
+                                    <Control.text model='.email' id='email' name='email' className='form-control'  value={this.state.user.email} onChange={(evt)=>this.setState({user: {...this.state.user,email: evt.target.value}})}
+                                    validators={{
+                                        required,
+                                        validEmail
+                                    }} />
+
+                                    <Errors className='text-danger' model='.email' show='touched' component='li' messages={{
+                                        required: 'Required',
+                                        validEmail: 'Choose a valid email address'
+                                    }}/>
+                                </Col>
+                            </Row>                   
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='phone' sm='3' id='phoneLabel'>Phone Number</Label>
+                                <Tooltip placement='left' toggle={()=>toggleTooltip('phone')} isOpen={this.state.tooltips.phone} target='phoneLabel'>Choose a working mobile phone number, we will use it to contact you</Tooltip>
+                                <Col sm='9'>
+                                    <Control.text model='.phone' id='phone' name='phone' className='form-control'  value={this.state.user.phone} onChange={(evt)=>this.setState({user: {...this.state.user,phone: evt.target.value}})}
                                     validators={{
                                         required,
                                         isNumber,
-                                        maxLength:maxLength(3)
+                                        minLength: minLength(6),
+                                        maxLength: maxLength(15)
                                     }} />
 
-                                    <Errors className='text-danger' model='.price' show='touched' component='li' messages={{
+                                    <Errors className='text-danger' model='.phone' show='touched' component='li' messages={{
                                         required: 'Required',
-                                        maxLength: 'can not be more than 3 digits',
-                                        isNumber: 'Must be a number'
+                                        isNumber: 'Choose a valid mobile number',
+                                        minLength: 'Can not be less than 6 numbers',
+                                        maxLength: 'Can not be more than 15 number'
                                     }}/>
                                 </Col>
-                            </Row>  
+                            </Row>                         
+                            <h3>Address Information</h3> 
                             <Row className='form-group'>
-                                <Label className='py-auto my-auto' htmlFor='file' sm='3' id='imageLabel'>Change Image</Label>
-                                <Tooltip placement='left' toggle={()=>toggleTooltip('image')} isOpen={this.state.tooltips.image} target='imageLabel'>{this.state.editing?'Upload a new image only if you want to change the original':'Upload a real picture for this item'}</Tooltip>
+                                <Label className='py-auto my-auto' htmlFor='city' sm='3' id='city'>City</Label>
                                 <Col sm='9'>
-                                    <Control.file model='.file' id='file' name='file' className='form-control-file'/>
+                                    <Control.text model='.address.city' id='city' name='city' className='form-control'  value={this.state.user.address.city} onChange={(evt)=>this.setState({user: {...this.state.user,address:{...this.state.address,city:evt.target.value}}})}/>
+                                </Col>
+                            </Row>                      
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='area' sm='3' id='area'>Area</Label>
+                                <Col sm='9'>
+                                    <Control.text model='.address.area' id='area' name='area' className='form-control'  value={this.state.user.address.area} onChange={(evt)=>this.setState({user: {...this.state.user,address:{...this.state.address,area:evt.target.value}}})}/>
+                                </Col>
+                            </Row>                                  
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='street' sm='3' id='street'>Street</Label>
+                                <Col sm='9'>
+                                    <Control.text model='.address.street' id='street' name='street' className='form-control'  value={this.state.user.address.street} onChange={(evt)=>this.setState({user: {...this.state.user,address:{...this.state.address,street:evt.target.value}}})}/>
+                                </Col>
+                            </Row>                                              
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='house' sm='3' id='house'>House</Label>
+                                <Col sm='9'>
+                                    <Control.text model='.address.house' id='house' name='house' className='form-control'  value={this.state.user.address.house} onChange={(evt)=>this.setState({user: {...this.state.user,address:{...this.state.address,house:evt.target.value}}})}/>
                                 </Col>
                             </Row>
-                            
                             <Row className='form-group'>
-                                <Label className='py-auto my-auto' htmlFor='description' sm='3' id='descriptionLabel'>Description</Label>
-                                <Tooltip placement='left' toggle={()=>toggleTooltip('description')} isOpen={this.state.tooltips.description} target='descriptionLabel'>Keep it short and honest</Tooltip>
+                                <Label className='py-auto my-auto' htmlFor='description' sm='3' id='description'>Description</Label>
                                 <Col sm='9'>
-                                    <Control.textarea model='.description' id='description' name='description' className='form-control' rows='5'  value={this.state.item.description} onChange={(evt)=>this.setState({item: {...this.state.item,description: evt.target.value}})}
-                                    validators={{
-                                        maxLength: maxLength(115)
-                                    }} />
-                                    
-                                    <Errors className='text-danger' model='.description' show='touched' component='li' messages={{
-                                        maxLength: 'Can not exceed 115 characters'
-                                    }} />
+                                    <Control.textarea model='.address.description' id='description' name='description' className='form-control'  value={this.state.user.address.description} onChange={(evt)=>this.setState({user: {...this.state.user,address:{...this.state.address,description:evt.target.value}}})}/>
                                 </Col>
-                            </Row>
+                            </Row>                                        
                             <Button block color='warning' type='submit'>Save</Button>
                         </LocalForm>
                     </ModalBody>

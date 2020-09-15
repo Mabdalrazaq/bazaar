@@ -31,7 +31,8 @@ import {setAnimating,
         fetchItems,
         fetchTables,
         loadActiveUser,
-        addTable, itemsLoading} from '../redux/actionCreators'
+        addTable,
+        editUser} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -63,7 +64,8 @@ const mapDispatchToProps=dispatch=>({
     fetchItems: ()=>dispatch(fetchItems()),
     fetchTables: ()=>dispatch(fetchTables()),
     loadActiveUser: ()=>dispatch(loadActiveUser()),
-    addTable: user=>dispatch(addTable(user))
+    addTable: user=>dispatch(addTable(user)),
+    editUser: sent=>dispatch(editUser(sent))
 })
 
 class Main extends Component{
@@ -106,7 +108,7 @@ class Main extends Component{
                         <Home/>
                     </Route>
                     <Route path='/profiles'>
-                        <Profile user={this.props.activeUser} items={this.props.items.items}/>
+                        <Profile user={this.props.activeUser} items={this.props.items.items} editUser={this.props.editUser}/>
                     </Route>
                     <Route path='/about'>
                         <About/>

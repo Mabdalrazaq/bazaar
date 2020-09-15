@@ -46,6 +46,28 @@ usersRouter.put('/:userId',async(req,res)=>{
             },
             ReturnValues:"UPDATED_NEW"
         }    
+    else
+        params={
+            TableName: 'Users',
+            Key:{
+                "id":Number(req.params.userId)
+            },
+            UpdateExpression:'set #nm=:n,email=:e,phone=:p,address.city=:c,address.area=:a,address.street=:s,address.house=:h,address.description=:ds ',
+            ExpressionAttributeNames:{
+                '#nm':'name'
+            },
+            ExpressionAttributeValues: {
+                ":n":req.body.name,
+                ':e':req.body.email,
+                ':p':req.body.phone,
+                ':c':req.body.address.city,
+                ':a':req.body.address.area,
+                ':s':req.body.address.street,
+                ':h':req.body.address.house,
+                ":ds":req.body.address.description
+            },
+            ReturnValues:"UPDATED_NEW"
+        }
     try{
         const user= await docClient.update(params).promise();
         res.json(user);
