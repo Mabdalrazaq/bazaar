@@ -1,4 +1,4 @@
-import React,{Component,useState} from 'react';
+import React,{Component} from 'react';
 import {Row,
         Col,
         Container,
@@ -38,7 +38,7 @@ class Sell extends Component{
         }
     }
     render(){
-
+        const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
         const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
         const items=this.props.table!==undefined?this.props.items.items.filter(item=>item.tableId===this.props.table.id):null;
 

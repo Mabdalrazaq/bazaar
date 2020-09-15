@@ -87,11 +87,11 @@ function Header (props){
                                 <span className='fa fa-info fa-lg'></span> About
                             </NavLink>
                         </NavItem>
-                        <NavItem>
+                        {/* <NavItem>
                             <NavLink className='nav-link' to='/contact'>
                                 <span className='fa fa-id-card fa-lg'></span> Contact Us
                             </NavLink>
-                        </NavItem>
+                        </NavItem> */}
                     </Nav>
                     <Nav className='ml-auto' navbar>
                         <NavItem>

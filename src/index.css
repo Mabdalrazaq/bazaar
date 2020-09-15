@@ -67,3 +67,22 @@ code {
 .cardHeight{
   min-height:560px;
 }
+.background-1{
+  min-Height: 700px;
+  background-image: url('/images/page1.jpg');
+}
+
+.opac{
+  opacity:0.9;
+  background-color: indianred !important;
+  color: black;
+  font-weight: bold;
+  margin-top:30px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+}
+
+.background-2{
+  min-Height: 700px;
+  background-image: url('/images/page2.jpg');
+}

@@ -62,7 +62,7 @@ class Profile extends Component{
         const countBought=boughtItems.length;
         const totalSold=soldItems.reduce((acc,current)=>acc+current.price,0);
         const totalBought=boughtItems.reduce((acc,current)=>acc+current.price,0);
-        const total=totalSold-totalBought;
+        const total=totalSold-totalBought-5;
         const NoTable=()=>{
             return(
                 <>
@@ -88,7 +88,7 @@ class Profile extends Component{
                             <h6>Sold Items total worth:</h6>
                         </Col>
                         <Col xs='6'>
-                            <h6><strong>{totalSold}</strong></h6>
+                            <h6><strong>{totalSold} JOD</strong></h6>
                         </Col>
                     </Row>
                     <Row className='mt-5'>
@@ -104,7 +104,15 @@ class Profile extends Component{
                             <h6>Bought Items total worth:</h6>
                         </Col>
                         <Col xs='6'>
-                            <h6><strong>{totalBought}</strong></h6>
+                            <h6><strong>{totalBought} JOD</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Table Reservation Cost:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>5 JOD</strong></h6>
                         </Col>
                     </Row>
                     <Row className='mt-5'>

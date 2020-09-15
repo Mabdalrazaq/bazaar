@@ -6,7 +6,7 @@ import {Row,
 function Footer(props) {
     return(
     <div className="footer">
-        <Container>
+        <Container className='mt-5'>
             <Row className="row justify-content-center">             
                 <Col xs='12' className="align-self-center">
                     <div className="text-center">
