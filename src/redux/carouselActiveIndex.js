@@ -5,7 +5,7 @@ const carouselActiveIndex=(state=[],action)=>{
     switch(action.type){
         case actionTypes.START_CAROUSEL_INDEX:
             const length=action.payload
-            return new Array(length+1).fill(0);
+            return new Array(length).fill(0);
         case actionTypes.CAROUSEL_NEXT:
             newState=state.slice(0);
             newState[action.payload.index]= newState[action.payload.index] === action.payload.length - 1 ? 0 : newState[action.payload.index] + 1;
