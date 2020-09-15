@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 const tables=(state={
     tables:[],
     isLoading:true,
-    errMess: null
+    errMess: null,
     },action)=>{
     switch(action.type){
         case actionTypes.TABLES_LOADING:
@@ -12,8 +12,11 @@ const tables=(state={
             return {...state,isLoading: false,errMess: action.payload}
         case actionTypes.ADD_TABLES:
             return {...state,tables:action.payload,isLoading: false,errMess:null}
+        case actionTypes.ADD_TABLE:
+            return {...state,tables:state.tables.concat(action.payload)};
         default:
             return state;
+            
     }
 }
 

@@ -1,57 +1,20 @@
 import * as actionTypes from './actionTypes';
 
-const usersDB=[
-    {
-        id:12345,
-        name: 'Mohammad',
-        image: 'images/12345.jpg',
-        tableId: 1,
-        email: 'm.abdalrazaq314@gmai.com',
-        phone: '+962 786726978',
-        address:{
-            street: 'azzoun',
-            house: 2,
-            area: 'marka',
-            city: 'amman',
-            description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
-        }
-    },
-    {
-        id: 232,
-        name: 'Sobhi',
-        image: 'images/232.jpg',
-        tableId: 2,
-        email: 'm.abdalrazaq314@gmai.com',
-        phone: '+962 786726978',
-        address:{
-            street: 'azzoun',
-            house: 2,
-            area: 'marka',
-            city: 'amman',
-            description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
-        }
-    },
-    {
-        id: 3,
-        name: 'Sara',
-        image: 'images/3.jpg',
-        tableId: 3,
-        email: 'm.abdalrazaq314@gmai.com',
-        phone: '+962 786726978',
-        address:{
-            street: 'azzoun',
-            house: 2,
-            area: 'marka',
-            city: 'amman',
-            description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
-        }
+const users=(state={
+    loadingInfo:{
+        isLoading: true,
+        errMess: null,
     }
-]
-
-
-const id=12345
-const users=(state=usersDB.find(user=>user.id===id),action)=>{
+},action)=>{
     switch(action.type){
+        case actionTypes.LOAD_ACTIVE_USER:
+            return {...state, loadingInfo:{isLoading: false,errMess: null}, ...action.payload};
+        case actionTypes.ACTIVE_USER_FAILED:
+            return {...state, loadingInfo:{isLoading: false, errMess: action.payload}};
+        case actionTypes.ACTIVE_USER_LOADING:
+            return {...state, loadingInfo: {isLoading: true, errMess: null}};
+        case actionTypes.UPDATE_ACTIVE_USER:
+            return {...state,...action.payload};
         default:
             return state;
     }

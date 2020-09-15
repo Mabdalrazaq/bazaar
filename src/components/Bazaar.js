@@ -29,7 +29,7 @@ class Bazaar extends Component{
                                         {table.ownerName}         
                                     </Media>
                                         <Media bottom>
-                                            <Link className='card-link' to={'/bazaar/'+table.id} onClick={()=>{document.documentElement.scrollTop = 0;}}>
+                                            <Link className='card-link' to={this.props.activeUser.tableId!==table.id? '/bazaar/'+table.id: '/sell'} onClick={()=>{document.documentElement.scrollTop = 0;}}>
                                                 <Button color='warning' outline>Enter table</Button> 
                                             </Link>
                                         </Media>

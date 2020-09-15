@@ -12,6 +12,7 @@ AWS.config.update({
   const dynamodb = new AWS.DynamoDB();
   const docClient= new AWS.DynamoDB.DocumentClient();
   let params;
+  let tablesId=3;
   
 tablesRouter.get('/',async(req,res)=>{
     params = {
@@ -26,6 +27,23 @@ tablesRouter.get('/',async(req,res)=>{
         res.sendStatus(400);
     }
 })
+
+tablesRouter.post('/',async(req,res)=>{
+    params={
+        TableName: 'Tables',
+        Item:{ ...req.body.table, id:++tablesId}
+    }
+    try{
+        const table=await docClient.put(params).promise();
+        console.log(table);
+        table.id=tablesId
+        res.json(table);
+    }catch(err){
+        console.log(err)
+        res.sendStatus(400);
+    }
+});
+
 
 
 module.exports = tablesRouter;

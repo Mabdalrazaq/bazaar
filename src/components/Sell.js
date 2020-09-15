@@ -40,8 +40,7 @@ class Sell extends Component{
     render(){
 
         const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
-        const items=this.props.items.items.filter(item=>item.tableId===this.props.table.id);
-
+        const items=this.props.table!==undefined?this.props.items.items.filter(item=>item.tableId===this.props.table.id):null;
         const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
 
         const getItem=(id)=>{
@@ -171,10 +170,7 @@ class Sell extends Component{
                 </>
             )
         else
-            return(
-                <h1>Rent a table!</h1>
-            )
-    
+            return <h1>You do not have a table yet!</h1>
     }
 }
 

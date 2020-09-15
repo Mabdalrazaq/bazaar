@@ -64,6 +64,21 @@ const usersDB=[
             city: 'amman',
             description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
         }
+    },
+    {
+        id:10,
+        name: 'Gregory House',
+        image: 'images/10.jpg',
+        tableId: 0,
+        email: 'm.abdalrazaq314@gmai.com',
+        phone: '+962 786726978',
+        address:{
+            street: 'azzoun',
+            house: 2,
+            area: 'marka',
+            city: 'amman',
+            description: 'مقابل مسجد عمر حسن هملان هملان في إسكان ماركا الشمالية'
+        }
     }
 ]
 

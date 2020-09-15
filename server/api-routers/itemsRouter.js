@@ -13,8 +13,6 @@ const dynamodb = new AWS.DynamoDB();
 const docClient= new AWS.DynamoDB.DocumentClient();
 
 let itemsId=20;
-let usersId=3;
-let tablesId=3;
 
 let params;
 
@@ -103,9 +101,6 @@ itemsRouter.delete('/:itemId',async(req,res)=>{
         res.status(400).send(err.message);
     }
 })
-
-itemsRouter.put
-
 
 
 module.exports = itemsRouter;

@@ -29,7 +29,9 @@ import {setAnimating,
         toggleEditingModal,
         addItem,
         fetchItems,
-        fetchTables} from '../redux/actionCreators'
+        fetchTables,
+        loadActiveUser,
+        addTable} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -59,17 +61,19 @@ const mapDispatchToProps=dispatch=>({
     toggleEditingModal: ()=>dispatch(toggleEditingModal()),
     addItem: (tableId,values)=>dispatch(addItem(tableId,values)),
     fetchItems: ()=>dispatch(fetchItems()),
-    fetchTables: ()=>dispatch(fetchTables())
+    fetchTables: ()=>dispatch(fetchTables()),
+    loadActiveUser: ()=>dispatch(loadActiveUser()),
+    addTable: user=>dispatch(addTable(user))
 })
 
 class Main extends Component{
     componentDidMount(){
         this.props.fetchTables();
         this.props.fetchItems();
+        this.props.loadActiveUser();
     }
     render(){
         const activeUser=this.props.activeUser
-        const ProfileWithId=({match})=><Profile user={this.props.activeUser}/>
         const TableWithId=({match})=><Table table={this.props.tables.tables.find(table=>table.id===Number(match.params.tableId))} 
         sellItem={this.props.sellItem} 
         toggleConfirmModal={this.props.toggleConfirmModal}
@@ -78,15 +82,31 @@ class Main extends Component{
         confirmModalOpen={this.props.confirmModalOpen}
         confirmedModalOpen={this.props.confirmedModalOpen}
         itemBeingProcessed={this.props.itemBeingProcessed}
-        items={this.props.items} />    
+        items={this.props.items} />
+        if(this.props.tables.isLoading||this.props.activeUser.loadingInfo.isLoading||this.props.items.isLoading)
+            return null
+        else if(this.props.tables.errMess||this.props.activeUser.loadingInfo.errMess||this.props.items.errMess)
+            return (
+                <div>
+                    <h1>Something is wrong right now, we are definetly working on it, return later!</h1>
+                    <h5>Thank you for your patience...</h5>
+                </div>
+            )
         return(
             <>
-                <Header user={activeUser} />
+                <Header user={activeUser} 
+                toggleConfirmModal={this.props.toggleConfirmModal}
+                toggleConfirmedModal={this.props.toggleConfirmedModal}
+                confirmModalOpen={this.props.confirmModalOpen}
+                confirmedModalOpen={this.props.confirmedModalOpen}
+                addTable={this.props.addTable} />
                 <Switch>
                     <Route path='/home'>
                         <Home/>
                     </Route>
-                    <Route path='/profiles/:userId' component={ProfileWithId}/>
+                    <Route path='/profiles'>
+                        <Profile user={this.props.activeUser}/>
+                    </Route>
                     <Route path='/about'>
                         <About/>
                     </Route>
@@ -96,10 +116,11 @@ class Main extends Component{
                     <Route exact path='/bazaar'>
                         <Bazaar tables={this.props.tables} setAnimating={this.props.setAnimating}
                         carouselNext={this.props.carouselNext} carouselPrev={this.props.carouselPrev}
-                        animating={this.props.animating} activeIndex={this.props.activeIndex} items={this.props.items} />
+                        animating={this.props.animating} activeIndex={this.props.activeIndex} items={this.props.items} 
+                        activeUser={this.props.activeUser} />
                     </Route>
                     <Route path='/sell'>
-                        <Sell user={activeUser} table={this.props.tables.tables.find(table=>table.id===activeUser.tableId)}
+                        <Sell table={this.props.tables.tables.find(table=>table.id===activeUser.tableId)}
                         sellItem={this.props.sellItem} removeItem={this.props.removeItem} editItem={this.props.editItem}
                         editingModalOpen={this.props.editingModalOpen} toggleEditingModal={this.props.toggleEditingModal}
                          addItem={this.props.addItem} items={this.props.items}  />

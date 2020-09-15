@@ -33,7 +33,7 @@ function Table (props){
     }
 
     const checkConfirm=evt=>{
-        if(evt.target.value==='buy this')
+        if(evt.target.value==='buy item')
             setConfirmButtonDisabled(false)
         else
             setConfirmButtonDisabled(true);
@@ -48,8 +48,8 @@ function Table (props){
                 <ModalBody>
                     <p>You pay for this item when you recieve it, return it if it is not as displayed in pictures.</p>
                     <p>Confirming payment and then disappearing will result in you <strong>blacklisted.</strong></p>
-                    <Label htmlFor='confirm' >Type <strong className='text-danger'>buy this</strong> to confirm your payment</Label>
-                    <Input model='.confirm' id='confirm' placeholder='buy this' className='mb-2' autoComplete='off' onChange={checkConfirm} className='form-control' />
+                    <Label htmlFor='confirm' >Type <strong className='text-danger'>buy item</strong> to confirm your payment</Label>
+                    <Input model='.confirm' id='confirm' className='mb-2' autoComplete='off' onChange={checkConfirm} className='form-control' />
                 </ModalBody>
                 <ModalFooter>
                 <p><small>Make sure the mobile number you provided in your account is correct, we will use it to contact you</small></p>

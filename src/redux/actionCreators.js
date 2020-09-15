@@ -1,5 +1,8 @@
 import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
+
+const activeUserId=10
+
 export const carouselNext=(length,index)=>({
     type: actionTypes.CAROUSEL_NEXT,
     payload:{
@@ -185,3 +188,70 @@ export const fetchItems=()=>async dispatch=>{
         dispatch(itemsFailed(err.message));
     }
 }
+
+export const loadActiveUser=()=>async dispatch=>{
+    dispatch(activeUserLoading());
+    try{
+        const response=await fetch(serverBase+'/users/'+activeUserId);
+        const user=await response.json();
+        if(response.status>=400)   
+            throw new Error('status code > 400');
+        dispatch({
+            type: actionTypes.LOAD_ACTIVE_USER,
+            payload: user
+        });     
+    }catch(err){
+        dispatch(activeUserFailed(err.message));
+    }
+}
+
+export const activeUserFailed=errMess=>({
+    type: actionTypes.ACTIVE_USER_FAILED,
+    payload: errMess
+})
+
+export const activeUserLoading=()=>({
+    type: actionTypes.ACTIVE_USER_LOADING
+})
+
+
+export const addTable=(user)=>async dispatch=>{
+    const data={
+        table:{
+            ownerId: user.id,
+            ownerName: user.name,
+            ownerImage: user.image
+        }
+    }
+    let response = await fetch('http://localhost:4001/api/tables',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    let jsonResponse= await response.json();
+    console.log(jsonResponse);
+    data.table.id=jsonResponse.id;
+    dispatch({
+        type:actionTypes.ADD_TABLE,
+        payload: data.table
+    })
+    response = await fetch(serverBase+'/users/'+user.id+'?'+new URLSearchParams({
+        rented: true,
+        tableId: data.table.id
+    }),
+    {
+        method: 'PUT',
+    })
+    jsonResponse= await response.json();
+    const changes=jsonResponse.Attributes;
+    console.log(jsonResponse);
+    dispatch({
+        type: actionTypes.UPDATE_ACTIVE_USER,
+        payload: changes
+    })
+    dispatch(loadActiveUser());
+    dispatch(fetchTables());
+}
+
