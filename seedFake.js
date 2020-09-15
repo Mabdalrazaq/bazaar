@@ -16,7 +16,7 @@ const seedData=async()=>{
     }  
 
     try{
-        let data= await dynamodb.deleteTable(params).promise() 
+        const data= await dynamodb.deleteTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -26,7 +26,7 @@ const seedData=async()=>{
     }
 
     try{
-        data= await dynamodb.deleteTable(params).promise() 
+        const data= await dynamodb.deleteTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -36,7 +36,7 @@ const seedData=async()=>{
     }
 
     try{
-        data= await dynamodb.deleteTable(params).promise() 
+        const data= await dynamodb.deleteTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -58,7 +58,7 @@ const seedData=async()=>{
 
 
     try{
-        data= await dynamodb.createTable(params).promise() 
+        const data= await dynamodb.createTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -78,7 +78,7 @@ const seedData=async()=>{
     };
 
     try{
-        data= await dynamodb.createTable(params).promise() 
+        const data= await dynamodb.createTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -98,7 +98,7 @@ const seedData=async()=>{
     };
 
     try{
-        data= await dynamodb.createTable(params).promise() 
+        const data= await dynamodb.createTable(params).promise() 
     }catch(err){
         console.log(err.message);
     }
@@ -112,9 +112,9 @@ const seedData=async()=>{
                 }
             }
             try{
-                data=await docClient.put(params).promise()
+                const data=await docClient.put(params).promise()
                 resolve(data)
-                console.log(`user ${user.name} added`)
+                console.log(`user ${user.id} added`)
             }catch(err){
                 console.log(err);
                 reject(err);
@@ -132,7 +132,7 @@ const seedData=async()=>{
                 }
             }
             try{
-                data=await docClient.put(params).promise()
+                const data=await docClient.put(params).promise()
                 resolve(data)
                 console.log(`table ${table.id} added`)
             }catch(err){
@@ -151,9 +151,9 @@ const seedData=async()=>{
                 }
             }
             try{
-                data=await docClient.put(params).promise()
-                resolve(data)
-                console.log(`item ${item.id} added`)
+                const data=await docClient.put(params).promise();
+                console.log(`item ${item.id} added`);
+                resolve(data);
             }catch(err){
                 console.log(err);
                 reject(err);
