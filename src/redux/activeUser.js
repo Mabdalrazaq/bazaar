@@ -5,7 +5,7 @@ const users=(state={
         isLoading: true,
         errMess: null,
     }
-},action)=>{
+}, action)=>{
     switch(action.type){
         case actionTypes.LOAD_ACTIVE_USER:
             return {...state, loadingInfo:{isLoading: false,errMess: null}, ...action.payload};
