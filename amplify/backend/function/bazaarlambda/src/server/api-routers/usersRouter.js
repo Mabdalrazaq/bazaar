@@ -1,15 +1,9 @@
 const express = require('express');
 const usersRouter = express.Router();
-const base=require('../dbBase');
 const app = require('../../app');
 
 const AWS = require("aws-sdk");
-AWS.config.update({
-    region: "us-west-2",
-    endpoint: base
-  });
-  
-const dynamodb = new AWS.DynamoDB();
+
 const docClient= new AWS.DynamoDB.DocumentClient();
 let params;
 let usersId=3;

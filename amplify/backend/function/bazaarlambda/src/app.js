@@ -26,7 +26,6 @@ app.use(function(req, res, next) {
 });
 
 const apiRouter = require('./server/api');
-
 app.use('/api',apiRouter);
 
 app.listen(3000,()=>{

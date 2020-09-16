@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
 
-const activeUserId=10;
+const activeUserId=12345;
 
 export const carouselNext=(length,index)=>({
     type: actionTypes.CAROUSEL_NEXT,
