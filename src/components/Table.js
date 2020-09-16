@@ -70,7 +70,7 @@ function Table (props){
                         return(
                             <Col xs='12' sm='12' md='6' lg='4' key={item.id} className='my-3' >
                                 <Card >
-                                    <CardImg width='100%' top src={item.image} alt={item.name} image cap height='300px'/>
+                                    <CardImg width='100%' top src={'/'+item.image} alt={item.name} image cap height='300px'/>
                                     <CardBody>
                                         <CardTitle className='font-weight-bold'>{item.name}</CardTitle>
                                         <CardSubtitle><Badge pill color='info'>{item.price} JOD</Badge></CardSubtitle>

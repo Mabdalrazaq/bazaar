@@ -32,7 +32,8 @@ import {setAnimating,
         fetchTables,
         loadActiveUser,
         addTable,
-        editUser} from '../redux/actionCreators'
+        editUser,
+        seed} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -65,11 +66,13 @@ const mapDispatchToProps=dispatch=>({
     fetchTables: ()=>dispatch(fetchTables()),
     loadActiveUser: ()=>dispatch(loadActiveUser()),
     addTable: user=>dispatch(addTable(user)),
-    editUser: sent=>dispatch(editUser(sent))
+    editUser: sent=>dispatch(editUser(sent)),
+    seed: ()=>dispatch(seed())
 })
 
 class Main extends Component{
     componentDidMount(){
+        // this.props.seed();
         this.props.fetchTables();
         this.props.fetchItems();
         this.props.loadActiveUser();

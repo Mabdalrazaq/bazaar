@@ -119,7 +119,7 @@ export const addItem=(tableId,values)=>async dispatch=>{
     data.item.available=true;
     data.item.tableId=tableId
 
-    const response = await fetch('http://localhost:4001/api/items',{
+    const response = await fetch(serverBase+'/items',{
       headers: {
         'Content-Type': 'application/json'
       },
@@ -205,6 +205,7 @@ export const loadActiveUser=()=>async dispatch=>{
             payload: user
         });     
     }catch(err){
+        console.log(err.message);
         dispatch(activeUserFailed(err.message));
     }
 }
@@ -227,7 +228,7 @@ export const addTable=(user)=>async dispatch=>{
             ownerImage: user.image
         }
     }
-    let response = await fetch('http://localhost:4001/api/tables',{
+    let response = await fetch(serverBase+'/tables',{
       headers: {
         'Content-Type': 'application/json'
       },
@@ -276,5 +277,13 @@ export const editUser=(sent)=>async dispatch=>{
         type: actionTypes.UPDATE_ACTIVE_USER,
         payload:changes
     });
+}
+
+export const seed = ()=>async dispatch=>{
+    try{
+        await fetch(serverBase);
+    }catch(err){
+        console.log(err);
+    }
 }
 
