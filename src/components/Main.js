@@ -136,7 +136,7 @@ class Main extends Component{
                         <p>The changes you make with these characters will be commited to the database, refreshing the page will not undo these changes.</p>
                         <p>Clicking the logo will take you to this sign in modal again, we know it is not professional but it is only a demo, the real website would have a sign in and authentication process, actually that is the only thing that is missing.</p>
                         <p>Refreshing the page while not on home page will result in some errors, these errors are a result of implementing this demo only, the website itself is all fine.</p>
-                        <p>The names in this fake sign in wondow are hardcoded, which means that they are static and would not change with profile editing. This does not reflect the quality of the website itself, please feel free to prove it yourselves.</p>
+                        <p>The names in this fake sign in window are hardcoded, which means that they are static and would not change with profile editing. This does not reflect the quality of the website itself, please feel free to prove it yourselves.</p>
                     </ModalFooter>
                 </Modal>
                 <Header user={activeUser} 
