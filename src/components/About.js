@@ -27,8 +27,8 @@ function About (props){
                     <Accordion.Collapse eventKey="0">
                         <CardBody>
                             <>
-                                <p>Bazaar is a website that is designed to emulate the real world traditional idea of bazaars, we focus on capturing every element that makes the bazaar the wondrous and magical place that brings people together.</p>
-                                <p>The idea was originally created to help talented people bringing their products to the online world without capitalizing on them, the transaction between the merchant and customer is in peer to peer fashion the website only charges for the table rent, the website also allows the merchants to decorate their tables as they see fit from various supported features.</p>
+                                <p>Bazaar is a website that is designed to emulate the real-world traditional idea of bazaars, we focus on capturing every element that makes the bazaar the wondrous and magical place that brings people together.</p>
+                                <p>The idea was created to help people bring their items to the online world without capitalizing on them, the transaction between the seller and the buyer is in peer to peer fashion, the website only charges for the table rent, the website also allows sellers to add as many items as they like, as long as they rent a table.</p>
                             </>
                         </CardBody>
                     </Accordion.Collapse>
@@ -41,7 +41,8 @@ function About (props){
                     </CardHeader>
                     <Accordion.Collapse eventKey="1">
                         <CardBody>
-                            <p>You can either participate in the Bazaar as a merchant or as a customer, merchants have the ability to rent tables to market their products, our website supports a maximum of 10 tables each day so merchants will have to race their way to reserve a table, all tables will be emptied after 24 hours and the process repeats, on the other hand customers have the ability to view the tables, and if their eyes catch an interesting table, they have the ability to enter the table to view more details and make transactions.</p>
+                            <p>You can participate in the Bazaar as a seller after logging in, where you will have the ability to rent tables to sell your items for 5 JOD a day that you will pay when we come to take your items to their new owners, if you sell items with a total worth less than 5 JOD, your table is for free. Renting a table is a one click process, our website supports a limited number of tables each day so sellers will have to race their way to reserve a table, all tables will be emptied after 24 hours and the process repeats.</p>
+                            <p>You can also participate as a buyer, where you will be roaming tables searching for the unknown, each item is unique, buying an item is only a one click process, after which we will contact you and deliver the item to you, you can pay us when you receive it and make sure it is as displayed in pictures, buying an item will immediately mark it as sold.</p>
                         </CardBody>
                     </Accordion.Collapse>
                 </Card>
@@ -53,7 +54,7 @@ function About (props){
                     </CardHeader>
                     <Accordion.Collapse eventKey="2">
                         <CardBody>
-                            <p>Aafter renting a table the merchant is allowed add as many items for sell as he likes, these items will be visible for the customers when they enter the table and they will be able to buy them directly, the buy button will put the item on soldout immediately and will initiate the contact between the merchant and customer to complete the transaction.</p>
+                            <p>after renting the table renters can add as many items as they want, they can also edit the items and remove them as they see fit, the users also have the ability to view the tables by entering the bazaar, and if an interesting table catches their eyes, they have the ability to enter the table to view more details and make transactions.</p>
                         </CardBody>
                     </Accordion.Collapse>
                 </Card>

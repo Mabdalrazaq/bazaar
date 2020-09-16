@@ -65,7 +65,7 @@ function Header (props){
             <Modal isOpen={props.confirmedModalOpen} toggle={props.toggleConfirmedModal}>
                 <ModalHeader toggle={props.toggleConfirmedModal}>Rental Confirmed!</ModalHeader>
                 <ModalBody>
-                    <h2>Your have rented a table <strong> successfully!</strong></h2>
+                    <h2>You have rented a table <strong> successfully!</strong></h2>
                     <p>We will reach to you to confirm your address, and we will deliver all your sold items!</p>
                 </ModalBody>
                 <ModalFooter>

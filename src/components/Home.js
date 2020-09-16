@@ -21,7 +21,7 @@ function Home (props){
                     <Card className='bg-warning mb-5 opac'>
                         <CardHeader><h2>What is Bazaar</h2></CardHeader>
                         <CardBody>
-                            <h3>Bazaar is a platform for talented and creative innovators to market thier products with a magical touch of culture.</h3>
+                            <h3>Bazaar is a platform that gives you the experience of real-life bazaars, either you like to wander around tables or rent one of them, you will find your need here!</h3>
                         </CardBody>
                     </Card>
                 </Col>
