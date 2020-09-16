@@ -14,6 +14,16 @@ import {Switch,
     Route,
     withRouter} from 'react-router-dom';
 
+import {Modal,
+    ModalBody,
+    ModalHeader,
+    ModalFooter,
+    Row,
+    Col,
+    Container,
+    Button
+} from 'reactstrap'
+
 import {connect} from 'react-redux';
 import {setAnimating,
         carouselNext,
@@ -32,7 +42,8 @@ import {setAnimating,
         fetchTables,
         loadActiveUser,
         addTable,
-        editUser} from '../redux/actionCreators'
+        editUser,
+        toggleSignModal} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -44,7 +55,8 @@ const mapStateToProps=state=>({
     itemBeingProcessed: state.itemBeingProcessed,
     editingModalOpen: state.editingModalOpenm,
     items: state.items,
-    activeUser: state.activeUser
+    activeUser: state.activeUser,
+    signModalOpen: state.signModalOpen
 })
 
 const mapDispatchToProps=dispatch=>({
@@ -63,17 +75,17 @@ const mapDispatchToProps=dispatch=>({
     addItem: (tableId,values)=>dispatch(addItem(tableId,values)),
     fetchItems: ()=>dispatch(fetchItems()),
     fetchTables: ()=>dispatch(fetchTables()),
-    loadActiveUser: ()=>dispatch(loadActiveUser()),
+    loadActiveUser: id=>dispatch(loadActiveUser(id)),
     addTable: user=>dispatch(addTable(user)),
     editUser: sent=>dispatch(editUser(sent)),
+    toggleSignModal: ()=>dispatch(toggleSignModal())
 })
 
 class Main extends Component{
     componentDidMount(){
-        // this.props.seed();
         this.props.fetchTables();
         this.props.fetchItems();
-        this.props.loadActiveUser();
+        // this.props.loadActiveUser(10);
     }
     render(){
         const activeUser=this.props.activeUser
@@ -87,7 +99,7 @@ class Main extends Component{
         itemBeingProcessed={this.props.itemBeingProcessed}
         items={this.props.items} 
         activeUser={this.props.activeUser}   />
-        if(this.props.tables.isLoading||this.props.activeUser.loadingInfo.isLoading||this.props.items.isLoading)
+        if(this.props.tables.isLoading||this.props.items.isLoading)
             return null
         else if(this.props.tables.errMess||this.props.activeUser.loadingInfo.errMess||this.props.items.errMess)
             return (
@@ -98,6 +110,50 @@ class Main extends Component{
             )
         return(
             <>
+                <Modal isOpen={this.props.signModalOpen}>
+                    <ModalHeader>Choose a fictional person to sign in with</ModalHeader>
+                    <ModalBody>
+                        <Row>
+                            <Col xs='3'>
+                                <Button block color='success' onClick={()=>{this.props.loadActiveUser(232); this.props.toggleSignModal()}}>Sobhi</Button>
+                            </Col>
+                            <Col xs='9' className='align-self-center'>
+                                <p className='text-success font-weight-bold'>This user initialy had a table for today</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs='3'>
+                                <Button block color='success' onClick={()=>{this.props.loadActiveUser(3); this.props.toggleSignModal()}}>Sara</Button>
+                            </Col>
+                            <Col xs='9' className='align-self-center'>
+                                <p className='text-success font-weight-bold'>This user initialy had a table for today</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs='3'>
+                                <Button block color='danger' onClick={()=>{this.props.loadActiveUser(10); this.props.toggleSignModal()}}>House</Button>
+                            </Col>
+                            <Col xs='9' className='align-self-center'>
+                                <p className='text-danger font-weight-bold'>This user initialy didn't have a table for today</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs='3'>
+                                <Button block color='danger' onClick={()=>{this.props.loadActiveUser(12345); this.props.toggleSignModal()}}>Moe</Button>
+                            </Col>
+                            <Col xs='9' className='align-self-center'>
+                                <p className='text-danger font-weight-bold'>This user initialy didn't have a table for today</p>
+                            </Col>
+                        </Row>
+                    </ModalBody>
+                    <ModalFooter>
+                        <p>This is only a demo for you to walk through the website and test its features, all features are connected to a well designed server which itself is connected to a well defined database!</p>
+                        <p>These 4 fake users are defined in a table in dynamodb, choosing one of them will load the website from their perspective</p>
+                        <p>The changes you make with these characters will be commited to the database, refreshing the page will not undo these changes.</p>
+                        <p>Clicking the logo will take you to this sign in modal again, we know it is not professional but it is only a demo, the real website would have a sign in and authentication process, actually that is the only thing that is missing.</p>
+                        <p>Refreshing the page while not on home page will result in some errors, these errors are a result of implementing this demo only, the website itself is all fine.</p>
+                    </ModalFooter>
+                </Modal>
                 <Header user={activeUser} 
                 toggleConfirmModal={this.props.toggleConfirmModal}
                 toggleConfirmedModal={this.props.toggleConfirmedModal}

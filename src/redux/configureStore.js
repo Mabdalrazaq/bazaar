@@ -11,6 +11,7 @@ import itemBeingProcessed from './itemBeingProcessed';
 import {createForms} from 'react-redux-form'
 import {initialConfirm} from './forms';
 import editingModalOpen from './editingModalOpen';
+import signModalOpen from './signModalOpen';
 import items from './items';
 import activeUser from './activeUser';
 
@@ -26,7 +27,8 @@ export const configureStore=()=>{
             itemBeingProcessed,
             editingModalOpen,
             items,
-            activeUser
+            activeUser,
+            signModalOpen
             // ...createForms({
             //     confirmForm: initialConfirm
             // })

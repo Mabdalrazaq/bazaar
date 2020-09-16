@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
 import {Storage} from 'aws-amplify'
 
-const activeUserId=10;
+const activeUserId=0;
 
 export const carouselNext=(length,index)=>({
     type: actionTypes.CAROUSEL_NEXT,
@@ -217,10 +217,10 @@ export const fetchItems=()=>async dispatch=>{
     }
 }
 
-export const loadActiveUser=()=>async dispatch=>{
+export const loadActiveUser=id=>async dispatch=>{
     dispatch(activeUserLoading());
     try{
-        const response=await fetch(serverBase+'/users/'+activeUserId);
+        const response=await fetch(serverBase+'/users/'+id);
         const user=await response.json();
         if(response.status>=400)   
             throw new Error('status code > 400');
@@ -280,7 +280,7 @@ export const addTable=(user)=>async dispatch=>{
         type: actionTypes.UPDATE_ACTIVE_USER,
         payload: changes
     })
-    dispatch(loadActiveUser());
+    dispatch(loadActiveUser(user.id));
     dispatch(fetchTables());
 }
 
@@ -335,3 +335,7 @@ export const editUser=(sent)=>async dispatch=>{
         }
     })
 }
+
+export const toggleSignModal=()=>({
+    type: actionTypes.TOGGLE_SIGN_MODAL
+})

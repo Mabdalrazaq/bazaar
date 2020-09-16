@@ -15,6 +15,8 @@ const users=(state={
             return {...state, loadingInfo: {isLoading: true, errMess: null}};
         case actionTypes.UPDATE_ACTIVE_USER:
             return {...state,...action.payload};
+        case actionTypes.CHOOSE_ACTIVE_USER:
+            return {...state}
         default:
             return state;
     }
