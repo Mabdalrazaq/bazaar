@@ -46,7 +46,7 @@ usersRouter.put('/:userId',async(req,res)=>{
             Key:{
                 "id":Number(req.params.userId)
             },
-            UpdateExpression:'set #nm=:n,email=:e,phone=:p,address.city=:c,address.area=:a,address.street=:s,address.house=:h,address.description=:ds ',
+            UpdateExpression:'set #nm=:n,email=:e,phone=:p,address.city=:c,address.area=:a,address.street=:s,address.house=:h,address.description=:ds, image=:im, imageName=:imn',
             ExpressionAttributeNames:{
                 '#nm':'name'
             },
@@ -58,7 +58,9 @@ usersRouter.put('/:userId',async(req,res)=>{
                 ':a':req.body.address.area,
                 ':s':req.body.address.street,
                 ':h':req.body.address.house,
-                ":ds":req.body.address.description
+                ":ds":req.body.address.description,
+                ":im": req.body.image,
+                ":imn": req.body.imageName
             },
             ReturnValues:"UPDATED_NEW"
         }

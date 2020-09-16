@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
+import {Storage} from 'aws-amplify'
 
 const activeUserId=12345;
 
@@ -70,22 +71,34 @@ export const prepareItem=id=>({
     payload:id
 })
 
-export const removeItem=id=>async dispatch=>{
-    await fetch(serverBase+'/items/'+id,{
+export const removeItem=item=>async dispatch=>{
+    await Storage.remove(item.imageName);
+    await fetch(serverBase+'/items/'+item.id,{
         method: 'DELETE',
     })
     dispatch({
         type:actionTypes.REMOVE_ITEM,
-        payload: id
+        payload: item.id
     });
 }
 
 export const editItem=(sent)=>async dispatch=>{
+    let image=sent.image;
+    let imageName=sent.imageName
+    console.log(sent);
+    if(sent.file!==undefined){
+        await Storage.remove(imageName);
+        await Storage.put(sent.file[0].name,sent.file[0])
+        image= await Storage.get(sent.file[0].name); 
+        imageName=sent.file[0].name; 
+    }
     const id=sent.id
     const data={
         name:sent.name,
         price:sent.price,
-        description: sent.description
+        description: sent.description,
+        image,
+        imageName
     }
     const response = await fetch(serverBase+'/items/'+id,{
         headers: {
@@ -112,10 +125,19 @@ export const toggleEditingModal=()=>({
 })
 
 export const addItem=(tableId,values)=>async dispatch=>{
+    let image='/'
+    let imageName='/'
+    if(values.file!==undefined){
+        imageName=values.file[0].name;
+        await Storage.put(values.file[0].name,values.file[0])
+        image= await Storage.get(values.file[0].name);    
+    }
     const data={
         item:{...values}
     }
-    data.item.image='images/new.png';
+    console.log(image);
+    data.item.image=image;
+    data.item.imageName=imageName;
     data.item.available=true;
     data.item.tableId=tableId
 
@@ -127,7 +149,6 @@ export const addItem=(tableId,values)=>async dispatch=>{
         body: JSON.stringify(data)
     })
     const jsonResponse= await response.json();
-    console.log(jsonResponse);
     data.item.id=jsonResponse.id;
     dispatch({
         type:actionTypes.ADD_ITEM,
@@ -225,7 +246,7 @@ export const addTable=(user)=>async dispatch=>{
         table:{
             ownerId: user.id,
             ownerName: user.name,
-            ownerImage: user.image
+            ownerImage: user.image,
         }
     }
     let response = await fetch(serverBase+'/tables',{
@@ -261,29 +282,53 @@ export const addTable=(user)=>async dispatch=>{
 }
 
 export const editUser=(sent)=>async dispatch=>{
+    let image=sent.image;
+    let imageName=sent.imageName;
+    console.log(sent);
+    if(sent.file!==undefined){
+        await Storage.remove(imageName);
+        await Storage.put(sent.file[0].name,sent.file[0])
+        image= await Storage.get(sent.file[0].name);  
+        imageName=sent.file[0].name
+    }
+
     const id=sent.id
-    const data={...sent}
-    const response = await fetch(serverBase+'/users/'+id,{
+    let data={...sent,image,imageName}
+    let response = await fetch(serverBase+'/users/'+id,{
         headers: {
             'Content-Type': 'application/json'
         },      
         method: 'PUT',
         body: JSON.stringify(data)
     })
-    const jsonResponse= await response.json();
+    let jsonResponse= await response.json();
     console.log(jsonResponse);
-    const changes=jsonResponse.Attributes;
+    let changes=jsonResponse.Attributes;
     dispatch({
         type: actionTypes.UPDATE_ACTIVE_USER,
         payload:changes
     });
-}
-
-export const seed = ()=>async dispatch=>{
-    try{
-        await fetch(serverBase);
-    }catch(err){
-        console.log(err);
+    data={
+        ownerImage:sent.image,
+        ownerName:sent.name
     }
+    console.log(sent.tableId);
+    response=await fetch(serverBase+'/tables/'+sent.tableId,{
+        headers: {
+            'Content-Type': 'application/json'
+        },      
+        method: 'PUT',
+        body: JSON.stringify(data)
+    })    
+    console.log(response);
+    jsonResponse=await response.json();
+    console.log(jsonResponse);
+    changes=jsonResponse.Attributes;
+    dispatch({
+        type: actionTypes.UPDATE_TABLE,
+        payload: {
+            changes,
+            id: sent.tableId
+        }
+    })
 }
-

@@ -47,14 +47,16 @@ itemsRouter.put('/:itemId',async(req,res)=>{
             Key:{
                 "id":Number(req.params.itemId)
             },
-            UpdateExpression:'set price=:p, #nm=:n, description=:d',
+            UpdateExpression:'set price=:p, #nm=:n, description=:d, image=:im, imageName=:imn',
             ExpressionAttributeNames:{
                 '#nm': 'name'
             },
             ExpressionAttributeValues: {
                 ":p": req.body.price,
                 ":n": req.body.name,
-                ":d": req.body.description
+                ":d": req.body.description,
+                ":im": req.body.image,
+                ":imn":req.body.imageName
             },
             ReturnValues:"UPDATED_NEW"
         }    

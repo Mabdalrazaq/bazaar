@@ -38,6 +38,29 @@ tablesRouter.post('/',async(req,res)=>{
     }
 });
 
+tablesRouter.put('/:tableId',async(req,res)=>{
+    params={
+        TableName: 'Tables',
+        Key:{
+            "id":Number(req.params.tableId)
+        },
+        UpdateExpression:'set ownerName=:on, ownerImage=:oi',
+        ExpressionAttributeValues: {
+            "on":req.body.ownerName,
+            "oi":req.body.ownerImage
+        },
+        ReturnValues:"UPDATED_NEW"
+    }
+    try{
+        const user= await docClient.update(params).promise();
+        res.json(user);
+    }catch(err){
+        console.log(err)
+        res.status(400).send(err.message);
+    }
+})
+
+
 
 
 module.exports = tablesRouter;

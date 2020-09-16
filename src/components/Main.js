@@ -32,8 +32,7 @@ import {setAnimating,
         fetchTables,
         loadActiveUser,
         addTable,
-        editUser,
-        seed} from '../redux/actionCreators'
+        editUser} from '../redux/actionCreators'
 
 const mapStateToProps=state=>({
     animating: state.carouselAnimating,
@@ -59,7 +58,7 @@ const mapDispatchToProps=dispatch=>({
     toggleConfirmedModal: ()=>dispatch(toggleConfirmedModal()),
     prepareItem: id=>dispatch(prepareItem(id)),
     editItem: sent=>dispatch(editItem(sent)),
-    removeItem: id=>dispatch(removeItem(id)),
+    removeItem: item=>dispatch(removeItem(item)),
     toggleEditingModal: ()=>dispatch(toggleEditingModal()),
     addItem: (tableId,values)=>dispatch(addItem(tableId,values)),
     fetchItems: ()=>dispatch(fetchItems()),
@@ -67,7 +66,6 @@ const mapDispatchToProps=dispatch=>({
     loadActiveUser: ()=>dispatch(loadActiveUser()),
     addTable: user=>dispatch(addTable(user)),
     editUser: sent=>dispatch(editUser(sent)),
-    seed: ()=>dispatch(seed())
 })
 
 class Main extends Component{

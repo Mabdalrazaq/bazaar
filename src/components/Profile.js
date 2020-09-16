@@ -31,10 +31,12 @@ class Profile extends Component{
         this.state={
             editingModalOpen: false,
             user: props.user,
+            confirmPicture: false,
             tooltips:{
                 name:false,
                 phone:false,
-                email: false
+                email: false,
+                image: false
             }
         }
     }
@@ -210,8 +212,15 @@ class Profile extends Component{
                                         maxLength: 'Can not be more than 15 number'
                                     }}/>
                                 </Col>
+                            </Row>
+                            <Row className='form-group'>
+                                <Label className='py-auto my-auto' htmlFor='file' sm='3' id='imageLabel'>Change Image</Label>
+                                    <Tooltip placement='left' toggle={()=>toggleTooltip('image')} isOpen={this.state.tooltips.image} target='imageLabel'>Upload a new image only if you want to change the original</Tooltip>
+                                <Col sm='9'>
+                                    <Control.file model='.file' id='file' name='file' className='form-control-file'/>
+                                </Col>
                             </Row>                         
-                            <h3>Address Information</h3> 
+                            <h5 className='mb-3'>Address Information:</h5> 
                             <Row className='form-group'>
                                 <Label className='py-auto my-auto' htmlFor='city' sm='3' id='city'>City</Label>
                                 <Col sm='9'>
@@ -254,12 +263,7 @@ class Profile extends Component{
                                 <CardBody className='container cardHeight'>
                                     <Row>
                                         <Col xs='6'>
-                                            <CardImg className='mediaImg' src={'/'+this.props.user.image} />
-                                        </Col>
-                                        <Col xs='6' className='align-self-center'>
-                                            <Label className="btn btn-warning btn-block">
-                                                Change profile picture <input type="file" hidden />
-                                            </Label>
+                                            <CardImg className='mediaImg' src={this.props.user.image} />
                                         </Col>
                                     </Row>
                                     <Row className='mt-3'>

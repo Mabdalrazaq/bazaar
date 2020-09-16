@@ -10,6 +10,11 @@
       "StackName": "amplify-bazaar-dev-113324",
       "StackId": "arn:aws:cloudformation:us-east-1:160258333655:stack/amplify-bazaar-dev-113324/4d351a50-f7f7-11ea-8143-0e09773e6f3f",
       "AmplifyAppId": "d1wokhbkl022no"
+    },
+    "categories": {
+      "auth": {
+        "bazaar1257042e": {}
+      }
     }
   }
 }

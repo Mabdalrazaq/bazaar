@@ -13,6 +13,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())

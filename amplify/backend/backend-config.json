@@ -22,5 +22,19 @@
         }
       ]
     }
+  },
+  "auth": {
+    "bazaar1257042e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "bazaarstorage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

@@ -40,7 +40,10 @@ class Sell extends Component{
     }
     render(){
         const toggleTooltip=(type)=>this.setState({tooltips:{...this.state.tooltips,[type]:!this.state.tooltips[type]}});
-        const toggleEditingModal=()=>this.setState({editingModalOpen:!this.state.editingModalOpen});
+        const toggleEditingModal=()=>{
+            this.setState({item:{}});
+            this.setState({editingModalOpen:!this.state.editingModalOpen});
+        }
         const items=this.props.table!==undefined?this.props.items.items.filter(item=>item.tableId===this.props.table.id):null;
 
         const getItem=(id)=>{
@@ -48,16 +51,17 @@ class Sell extends Component{
         }
 
         const handleEdit=(id)=>{
+            toggleEditingModal();
             this.setState({
                 item:getItem(id),
                 editing: true
             })
-            toggleEditingModal();
         }
         
         const handleSumbit=values=>{
             toggleEditingModal();
             const sent={...this.state.item,...values}
+            console.log(sent);
             if(this.state.editing)
                 this.props.editItem(sent);
             else
@@ -65,12 +69,12 @@ class Sell extends Component{
         }
 
         const handleAdd=()=>{
+            toggleEditingModal();
             this.setState({
                 item:{},
                 editing: false
             });
             this.setState(this.setState({item: {...this.state.item,name: this.state.item.name}}))
-            toggleEditingModal();
         }
     
         if(this.props.table!==undefined)
@@ -124,7 +128,7 @@ class Sell extends Component{
                                         <Control.file model='.file' id='file' name='file' className='form-control-file'/>
                                     </Col>
                                 </Row>
-                                
+
                                 <Row className='form-group'>
                                     <Label className='py-auto my-auto' htmlFor='description' sm='3' id='descriptionLabel'>Description</Label>
                                     <Tooltip placement='left' toggle={()=>toggleTooltip('description')} isOpen={this.state.tooltips.description} target='descriptionLabel'>Keep it short and honest</Tooltip>
@@ -156,7 +160,7 @@ class Sell extends Component{
                                                 <CardSubtitle><Badge pill color='info'>{item.price} JOD</Badge></CardSubtitle>
                                                 <CardText className='cardTextHeight'>{item.description}</CardText>
                                                 <Button className={item.available? 'd-inline ml-auto mr-1': 'd-none'} color='success' size='sm' onClick={()=>handleEdit(item.id)}>Edit</Button>
-                                                <Button className={item.available? 'd-inline': 'd-none'} color='danger' size='sm' onClick={()=>this.props.removeItem(item.id)}>Remove</Button>
+                                                <Button className={item.available? 'd-inline': 'd-none'} color='danger' size='sm' onClick={()=>this.props.removeItem(item)}>Remove</Button>
                                             </CardBody>
                                                 <Button className={item.available? 'd-none': 'd-block'} color='secondary' disabled block>Sold</Button>
                                         </Card>
