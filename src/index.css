@@ -70,6 +70,7 @@ code {
 .background-1{
   min-Height: 700px;
   background-image: url('/images/page1.jpg');
+  margin-bottom: 150px;
 }
 
 .opac{
@@ -81,9 +82,4 @@ code {
   margin-bottom: 30px;
   border-radius: 30px;
   min-height: 400px;
-}
-
-.background-2{
-  min-Height: 700px;
-  background-image: url('/images/page2.jpg');
 }

@@ -26,7 +26,7 @@ const usersDB=[
         image: 'images/12345.jpg',
         tableId: 1,
         email: 'm.abdalrazaq314@gmail.com',
-        phone: '+962 786726978',
+        phone: '+962786726978',
         address:{
             street: 'azzoun',
             house: 2,
@@ -41,7 +41,7 @@ const usersDB=[
         image: 'images/232.jpg',
         tableId: 2,
         email: 'm.abdalrazaq314@gmail.com',
-        phone: '+962 786726978',
+        phone: '+962786726978',
         address:{
             street: 'azzoun',
             house: 2,
@@ -56,7 +56,7 @@ const usersDB=[
         image: 'images/3.jpg',
         tableId: 3,
         email: 'm.abdalrazaq314@gmail.com',
-        phone: '+962 786726978',
+        phone: '+962786726978',
         address:{
             street: 'azzoun',
             house: 2,
@@ -71,7 +71,7 @@ const usersDB=[
         image: 'images/10.jpg',
         tableId: 0,
         email: 'm.abdalrazaq314@gmail.com',
-        phone: '+962 786726978',
+        phone: '+962786726978',
         address:{
             street: 'azzoun',
             house: 2,

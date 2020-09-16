@@ -20,7 +20,8 @@ import {required,maxLength,isNumber} from '../util/validators';
 
 import {LocalForm,
         Control,
-        Errors} from 'react-redux-form'
+        Errors,
+        actions} from 'react-redux-form'
 
 class Sell extends Component{
     constructor(props){
@@ -46,7 +47,6 @@ class Sell extends Component{
             return items.find(item=>item.id===id);
         }
 
-
         const handleEdit=(id)=>{
             this.setState({
                 item:getItem(id),
@@ -69,6 +69,7 @@ class Sell extends Component{
                 item:{},
                 editing: false
             });
+            this.setState(this.setState({item: {...this.state.item,name: this.state.item.name}}))
             toggleEditingModal();
         }
     
@@ -78,18 +79,19 @@ class Sell extends Component{
                     <Modal isOpen={this.state.editingModalOpen} toggle={toggleEditingModal}>
                         <ModalHeader toggle={toggleEditingModal}>Edit item</ModalHeader>
                         <ModalBody>
-                            <LocalForm onSubmit={values=>handleSumbit(values)}>
+                            <LocalForm onSubmit={values=>handleSumbit(values)}
+                            initialState={this.state.item}    >
                                 <Row className='form-group'>
                                     <Label className='py-auto my-auto' htmlFor='name' sm='3' id='nameLabel'>Name</Label>
                                     <Tooltip placement='left' toggle={()=>toggleTooltip('name')} isOpen={this.state.tooltips.name} target='nameLabel'>Choose a descriptive name</Tooltip>
                                     <Col sm='9'>
-                                        <Control.text model='.name' id='name' name='name' className='form-control' value={this.state.item.name} onChange={(evt)=>this.setState({item: {...this.state.item,name: evt.target.value}})}
+                                        <Control.text model='.name' id='name' name='name' className='form-control' value={this.state.item.name} onChange={evt=>this.setState({item: {...this.state.item,name: evt.target.value}})}
                                         validators={{
                                             required,
                                             maxLength: maxLength(25)
                                         }} />
                                         
-                                        <Errors className='text-danger' model='.name' show='touched' component='li' messages={{
+                                        <Errors className='text-danger' model='.name' show='touched'  component='li' messages={{
                                             required: 'Required',
                                             maxLength: 'Name can not be more than 25 characters'
                                         }} />
@@ -148,7 +150,7 @@ class Sell extends Component{
                                 return(
                                     <Col xs='12' sm='12' md='6' lg='4' key={item.id} className='my-3' >
                                         <Card>
-                                            <CardImg width='100%' top src={item.image} alt={item.name} image cap height='300px'/>
+                                            <CardImg width='100%' top src={item.image} alt={item.name} height='300px'/>
                                             <CardBody>
                                                 <CardTitle className='font-weight-bold'>{item.name}</CardTitle>
                                                 <CardSubtitle><Badge pill color='info'>{item.price} JOD</Badge></CardSubtitle>

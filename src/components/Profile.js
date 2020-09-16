@@ -66,8 +66,33 @@ class Profile extends Component{
         const NoTable=()=>{
             return(
                 <>
-                    <h1>You do not have a table for today</h1>
-                    <h4 className='mt-5'>Rent a table from <Link to='/sell'>here</Link></h4>
+                    <h4>You do not have a table for today</h4>
+                    <h5 className='mt-5'>Click the Rent table button up there to rent a table</h5>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Number of bought Items:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{countBought}</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Bought Items total worth:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{totalBought} JOD</strong></h6>
+                        </Col>
+                    </Row>
+                    <Row className='mt-5'>
+                        <Col xs='6'>
+                            <h6>Total:</h6>
+                        </Col>
+                        <Col xs='6'>
+                            <h6><strong>{total+5>0?`We owe you ${total+5} JOD!`: `You owe us ${-1*(total+5)} JOD`}</strong></h6>
+                        </Col>
+                    </Row>
+
                 </>
             )
         }
@@ -120,7 +145,7 @@ class Profile extends Component{
                             <h6>Total:</h6>
                         </Col>
                         <Col xs='6'>
-                            <h6><strong>{total>0?`We owe you ${total} JOD!`: `You owe us ${total} JOD`}</strong></h6>
+                            <h6><strong>{total>0?`We owe you ${total} JOD!`: `You owe us ${-1*total} JOD`}</strong></h6>
                         </Col>
                     </Row>
                 </>
@@ -131,7 +156,7 @@ class Profile extends Component{
                 <Modal isOpen={this.state.editingModalOpen} toggle={toggleEditingModal}>
                     <ModalHeader toggle={toggleEditingModal}>Edit item</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={values=>handleSumbit(values)}>
+                        <LocalForm initialState={this.state.user} onSubmit={values=>handleSumbit(values)}>
                             <Row className='form-group'>
                                 <Label className='py-auto my-auto' htmlFor='name' sm='3' id='nameLabel'>Name</Label>
                                 <Tooltip placement='left' toggle={()=>toggleTooltip('name')} isOpen={this.state.tooltips.name} target='nameLabel'>Choose a nice nickname</Tooltip>
@@ -270,7 +295,7 @@ class Profile extends Component{
                         </Col>
                         <Col xs='12' md='6'>
                             <Card>
-                                <CardHeader><h3>Your money for today</h3></CardHeader>
+                                <CardHeader><h3>Money activity</h3></CardHeader>
                                 <CardBody className='cardHeight'>
                                     {this.props.user.tableId===0? <NoTable/>: <YesTable/>}
                                 </CardBody>

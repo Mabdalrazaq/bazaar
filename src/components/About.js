@@ -53,7 +53,7 @@ function About (props){
                     </CardHeader>
                     <Accordion.Collapse eventKey="2">
                         <CardBody>
-                            <p>You can either participate in the Bazaar as a merchant or as a customer, merchants have the ability to rent tables to market their products, our website supports a maximum of 10 tables each day so merchants will have to race their way to reserve a table, all tables will be emptied after 24 hours and the process repeats, on the other hand customers have the ability to view the tables, and if their eyes catch an interesting table, they have the ability to enter the table to view more details and make transactions.</p>
+                            <p>Aafter renting a table the merchant is allowed add as many items for sell as he likes, these items will be visible for the customers when they enter the table and they will be able to buy them directly, the buy button will put the item on soldout immediately and will initiate the contact between the merchant and customer to complete the transaction.</p>
                         </CardBody>
                     </Accordion.Collapse>
                 </Card>

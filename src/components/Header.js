@@ -68,6 +68,9 @@ function Header (props){
                     <h2>Your have rented a table <strong> successfully!</strong></h2>
                     <p>We will reach to you to confirm your address, and we will deliver all your sold items!</p>
                 </ModalBody>
+                <ModalFooter>
+                    <p className='mr-auto'><small>Click <Link onClick={props.toggleConfirmedModal} to='/sell'>here</Link> to go to your table and start adding items!</small></p>
+                </ModalFooter>
                 <Button onClick={props.toggleConfirmedModal} color='warning'>Okay</Button>
             </Modal>
             <Navbar color='light' expand='sm' light fixed='top'>
