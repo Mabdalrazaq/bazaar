@@ -21,12 +21,12 @@ function Table (props){
     const [confirmButtonDisabled,setConfirmButtonDisabled]=useState(true);
     const handleBuying=id=>{
         props.prepareItem(id)
-        props.toggleConfirmModal();
+        props.toggleConfirmModal('buy');
     }
 
     const handlePayment=()=>{
-        props.toggleConfirmModal();
-        props.toggleConfirmedModal();
+        props.toggleConfirmModal('buy');
+        props.toggleConfirmedModal('buy');
         const item=props.itemBeingProcessed
         console.log(item);
         props.sellItem(item,props.activeUser.id);
@@ -43,8 +43,8 @@ function Table (props){
 
     return (
         <>
-            <Modal isOpen={props.confirmModalOpen} toggle={props.toggleConfirmModal} >
-                <ModalHeader toggle={props.toggleConfirmModal}>Confirm payment</ModalHeader>
+            <Modal isOpen={props.confirmModalOpen.buy} toggle={()=>props.toggleConfirmModal('buy')} >
+                <ModalHeader toggle={()=>props.toggleConfirmModal('buy')}>Confirm payment</ModalHeader>
                 <ModalBody>
                     <p>You pay for this item when you recieve it, return it if it is not as displayed in pictures.</p>
                     <p>Confirming payment and then disappearing will result in you <strong>blacklisted.</strong></p>
@@ -56,13 +56,13 @@ function Table (props){
                 <Button disabled={confirmButtonDisabled} color='warning' onClick={handlePayment} >Confirm</Button>
                 </ModalFooter>
             </Modal>
-            <Modal isOpen={props.confirmedModalOpen} toggle={props.toggleConfirmedModal}>
-                <ModalHeader toggle={props.toggleConfirmedModal}>Payment Confirmed!</ModalHeader>
+            <Modal isOpen={props.confirmedModalOpen.buy} toggle={()=>props.toggleConfirmedModal('buy')}>
+                <ModalHeader toggle={()=>props.toggleConfirmedModal('buy')}>Payment Confirmed!</ModalHeader>
                 <ModalBody>
                     <h2>Your payment has been <strong>confirmed!</strong></h2>
                     <p>We will reach to you to confirm your address, and we will deliver this item to you in 2 days!</p>
                 </ModalBody>
-                <Button onClick={props.toggleConfirmedModal} color='warning'>Okay</Button>
+                <Button onClick={()=>props.toggleConfirmedModal('buy')} color='warning'>Okay</Button>
             </Modal>
             <Container>
                 <Row>

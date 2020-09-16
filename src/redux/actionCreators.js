@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import serverBase from './serverBase';
 import {Storage} from 'aws-amplify'
 
-const activeUserId=12345;
+const activeUserId=10;
 
 export const carouselNext=(length,index)=>({
     type: actionTypes.CAROUSEL_NEXT,
@@ -58,12 +58,15 @@ export const sellItem=(itemId,buyerId)=>async dispatch=>{
 }
 
 
-export const toggleConfirmModal=()=>({
-    type : actionTypes.TOGGLE_CONFIRM_MODAL
+export const toggleConfirmModal=(t)=>({
+    type : actionTypes.TOGGLE_CONFIRM_MODAL,
+    payload:t
+
 })
 
-export const toggleConfirmedModal=()=>({
-    type: actionTypes.TOGGLE_CONFIRMED_MODAL
+export const toggleConfirmedModal=(t)=>({
+    type: actionTypes.TOGGLE_CONFIRMED_MODAL,
+    payload: t
 })
 
 export const prepareItem=id=>({

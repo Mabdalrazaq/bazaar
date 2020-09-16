@@ -25,8 +25,8 @@ function Header (props){
     const [confirmButtonDisabled,setConfirmButtonDisabled]=useState(true);
 
     const handleRental=()=>{
-        props.toggleConfirmModal();
-        props.toggleConfirmedModal();
+        props.toggleConfirmModal('rent');
+        props.toggleConfirmedModal('rent');
         props.addTable(props.user);
     }
 
@@ -42,15 +42,15 @@ function Header (props){
     const rentTable=(evt)=>{
         if(props.user.tableId===0){
             evt.preventDefault();
-            props.toggleConfirmModal();
+            props.toggleConfirmModal('rent');
         }
         else
             return;
     }
     return(
         <>
-            <Modal isOpen={props.confirmModalOpen} toggle={props.toggleConfirmModal} >
-                <ModalHeader toggle={props.toggleConfirmModal}>Confirm renting</ModalHeader>
+            <Modal isOpen={props.confirmModalOpen.rent} toggle={()=>props.toggleConfirmModal('rent')} >
+                <ModalHeader toggle={()=>props.toggleConfirmModal('rent')}>Confirm renting</ModalHeader>
                 <ModalBody>
                     <p>Renting a table costs 5 JOD all inclusive, you pay when we to take your sold items to their new owners.</p>
                     <p>If you get less than 5 JOD worth of money from your sold items, we will <strong>not</strong> charge you anything!</p>
@@ -62,20 +62,20 @@ function Header (props){
                 <Button disabled={confirmButtonDisabled} color='warning' onClick={handleRental} >Confirm</Button>
                 </ModalFooter>
             </Modal>
-            <Modal isOpen={props.confirmedModalOpen} toggle={props.toggleConfirmedModal}>
-                <ModalHeader toggle={props.toggleConfirmedModal}>Rental Confirmed!</ModalHeader>
+            <Modal isOpen={props.confirmedModalOpen.rent} toggle={()=>props.toggleConfirmedModal('rent')}>
+                <ModalHeader toggle={()=>props.toggleConfirmedModal('rent')}>Rental Confirmed!</ModalHeader>
                 <ModalBody>
                     <h2>You have rented a table <strong> successfully!</strong></h2>
                     <p>We will reach to you to confirm your address, and we will deliver all your sold items!</p>
                 </ModalBody>
                 <ModalFooter>
-                    <p className='mr-auto'><small>Click <Link onClick={props.toggleConfirmedModal} to='/sell'>here</Link> to go to your table and start adding items!</small></p>
+                    <p className='mr-auto'><small>Click <Link onClick={()=>props.toggleConfirmedModal('rent')} to='/sell'>here</Link> to go to your table and start adding items!</small></p>
                 </ModalFooter>
-                <Button onClick={props.toggleConfirmedModal} color='warning'>Okay</Button>
+                <Button onClick={()=>props.toggleConfirmedModal('rent')} color='warning'>Okay</Button>
             </Modal>
             <Navbar color='light' expand='sm' light fixed='top'>
                 <NavbarBrand href='/home'>
-                    <img src='images/logo.png' alt='logo' width='120px' />
+                    <img src="https://bazaarbucket113324-dev.s3.amazonaws.com/public/logo.png" alt='logo' width='120px' />
                 </NavbarBrand>
                 <NavbarToggler onClick={toggleNav}/>
                 <Collapse isOpen={isNavOpen} navbar>
