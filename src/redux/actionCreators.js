@@ -145,6 +145,7 @@ export const addItem=(tableId,values)=>async dispatch=>{
     data.item.imageName=imageName;
     data.item.available=true;
     data.item.tableId=tableId
+    data.item.price=Number(data.item.price);
 
     const response = await fetch(serverBase+'/items',{
       headers: {
@@ -319,24 +320,26 @@ export const editUser=(sent)=>async dispatch=>{
         ownerName:sent.name
     }
     console.log(sent.tableId);
-    response=await fetch(serverBase+'/tables/'+sent.tableId,{
-        headers: {
-            'Content-Type': 'application/json'
-        },      
-        method: 'PUT',
-        body: JSON.stringify(data)
-    })    
-    console.log(response);
-    jsonResponse=await response.json();
-    console.log(jsonResponse);
-    changes=jsonResponse.Attributes;
-    dispatch({
-        type: actionTypes.UPDATE_TABLE,
-        payload: {
-            changes,
-            id: sent.tableId
-        }
-    })
+    if(sent.tableId!==0){
+        response=await fetch(serverBase+'/tables/'+sent.tableId,{
+            headers: {
+                'Content-Type': 'application/json'
+            },      
+            method: 'PUT',
+            body: JSON.stringify(data)
+        })
+        console.log(response);
+        jsonResponse=await response.json();
+        console.log(jsonResponse);
+        changes=jsonResponse.Attributes;
+        dispatch({
+            type: actionTypes.UPDATE_TABLE,
+            payload: {
+                changes,
+                id: sent.tableId
+            }
+        })    
+    }
 }
 
 export const toggleSignModal=()=>({

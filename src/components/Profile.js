@@ -65,6 +65,9 @@ class Profile extends Component{
         const totalSold=soldItems.reduce((acc,current)=>acc+current.price,0);
         const totalBought=boughtItems.reduce((acc,current)=>acc+current.price,0);
         const total=totalSold-totalBought-5;
+        console.log(total)
+        console.log(totalSold);
+        console.log(totalBought);
         const NoTable=()=>{
             return(
                 <>
