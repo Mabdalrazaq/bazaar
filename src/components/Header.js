@@ -26,7 +26,6 @@ function Header (props){
 
     const handleRental=()=>{
         props.toggleConfirmModal('rent');
-        props.toggleConfirmedModal('rent');
         props.addTable(props.user);
     }
 

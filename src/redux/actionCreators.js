@@ -55,6 +55,8 @@ export const sellItem=(itemId,buyerId)=>async dispatch=>{
             buyerId
         }
     })
+    dispatch(toggleConfirmedModal('buy'));
+
 }
 
 
@@ -282,6 +284,7 @@ export const addTable=(user)=>async dispatch=>{
     })
     dispatch(loadActiveUser(user.id));
     dispatch(fetchTables());
+    dispatch(toggleConfirmedModal('rent'));
 }
 
 export const editUser=(sent)=>async dispatch=>{

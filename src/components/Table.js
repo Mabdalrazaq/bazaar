@@ -26,9 +26,7 @@ function Table (props){
 
     const handlePayment=()=>{
         props.toggleConfirmModal('buy');
-        props.toggleConfirmedModal('buy');
         const item=props.itemBeingProcessed
-        console.log(item);
         props.sellItem(item,props.activeUser.id);
     }
 

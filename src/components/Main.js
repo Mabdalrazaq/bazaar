@@ -113,45 +113,30 @@ class Main extends Component{
                 <Modal isOpen={this.props.signModalOpen}>
                     <ModalHeader>Choose a fictional person to sign in with</ModalHeader>
                     <ModalBody>
-                        <Row>
-                            <Col xs='3'>
-                                <Button block color='success' onClick={()=>{this.props.loadActiveUser(232); this.props.toggleSignModal()}}>Sobhi</Button>
+                        <Row className='mb-5'>
+                            <Col xs='6'>
+                                <Button block color='primary' onClick={()=>{this.props.loadActiveUser(232); this.props.toggleSignModal()}}>Sobhi</Button>
                             </Col>
-                            <Col xs='9' className='align-self-center'>
-                                <p className='text-success font-weight-bold'>This user initialy had a table for today</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs='3'>
-                                <Button block color='success' onClick={()=>{this.props.loadActiveUser(3); this.props.toggleSignModal()}}>Sara</Button>
-                            </Col>
-                            <Col xs='9' className='align-self-center'>
-                                <p className='text-success font-weight-bold'>This user initialy had a table for today</p>
+                            <Col xs='6'>
+                                <Button block color='primary' onClick={()=>{this.props.loadActiveUser(12345); this.props.toggleSignModal()}}>Moe</Button>
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs='3'>
-                                <Button block color='danger' onClick={()=>{this.props.loadActiveUser(10); this.props.toggleSignModal()}}>House</Button>
+                            <Col xs='6'>
+                                <Button block color='primary' onClick={()=>{this.props.loadActiveUser(3); this.props.toggleSignModal()}}>Sara</Button>
                             </Col>
-                            <Col xs='9' className='align-self-center'>
-                                <p className='text-danger font-weight-bold'>This user initialy didn't have a table for today</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs='3'>
-                                <Button block color='danger' onClick={()=>{this.props.loadActiveUser(12345); this.props.toggleSignModal()}}>Moe</Button>
-                            </Col>
-                            <Col xs='9' className='align-self-center'>
-                                <p className='text-danger font-weight-bold'>This user initialy didn't have a table for today</p>
+                            <Col xs='6'>
+                                <Button block color='primary' onClick={()=>{this.props.loadActiveUser(10); this.props.toggleSignModal()}}>House</Button>
                             </Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
                         <p>This is only a demo for you to walk through the website and test its features, all features are connected to a well designed server which itself is connected to a well defined database!</p>
-                        <p>These 4 fake users are defined in a table in dynamodb, choosing one of them will load the website from their perspective</p>
+                        <p>These 4 fake users are defined in a table in dynamodb, choosing one of them will load the website from their perspective, initially non of them has rented a table, try letting them interact with each other</p>
                         <p>The changes you make with these characters will be commited to the database, refreshing the page will not undo these changes.</p>
                         <p>Clicking the logo will take you to this sign in modal again, we know it is not professional but it is only a demo, the real website would have a sign in and authentication process, actually that is the only thing that is missing.</p>
                         <p>Refreshing the page while not on home page will result in some errors, these errors are a result of implementing this demo only, the website itself is all fine.</p>
+                        <p>The names in this fake sign in wondow are hardcoded, which means that they are static and would not change with profile editing. This does not reflect the quality of the website itself, please feel free to prove it yourselves.</p>
                     </ModalFooter>
                 </Modal>
                 <Header user={activeUser} 
