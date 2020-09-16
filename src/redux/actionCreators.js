@@ -309,7 +309,7 @@ export const editUser=(sent)=>async dispatch=>{
         payload:changes
     });
     data={
-        ownerImage:sent.image,
+        ownerImage:image,
         ownerName:sent.name
     }
     console.log(sent.tableId);

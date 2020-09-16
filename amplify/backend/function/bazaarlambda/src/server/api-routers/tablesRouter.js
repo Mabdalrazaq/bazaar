@@ -44,10 +44,14 @@ tablesRouter.put('/:tableId',async(req,res)=>{
         Key:{
             "id":Number(req.params.tableId)
         },
-        UpdateExpression:'set ownerName=:on, ownerImage=:oi',
+        UpdateExpression:'set #on=:on, #oi=:oi',
+        ExpressionAttributeNames:{
+            "#on":"ownerName",
+            "#oi":"ownerImage"
+        },
         ExpressionAttributeValues: {
-            "on":req.body.ownerName,
-            "oi":req.body.ownerImage
+            ":on":req.body.ownerName,
+            ":oi":req.body.ownerImage
         },
         ReturnValues:"UPDATED_NEW"
     }

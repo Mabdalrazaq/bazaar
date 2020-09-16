@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-bazaar-dev-113324-deployment",
-          "S3Key": "amplify-builds/bazaarlambda-642b4242344778356e35-build.zip"
+          "S3Key": "amplify-builds/bazaarlambda-495a4576656e516f5a4c-build.zip"
         }
       }
     },
